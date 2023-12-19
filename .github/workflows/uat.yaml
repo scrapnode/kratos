@@ -69,8 +69,9 @@ jobs:
       - uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: .
+          file: .docker/Dockerfile-build
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/mstp-account:${{ needs.prepare.outputs.BUILD_ID }}, ${{ secrets.DOCKERHUB_USERNAME }}/mstp-account:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/kratos:${{ needs.prepare.outputs.BUILD_ID }}, ${{ secrets.DOCKERHUB_USERNAME }}/kratos:latest
 
   ecr:
     runs-on: ubuntu-latest
@@ -89,10 +90,8 @@ jobs:
 
       - name: Push to AWS ECR
         run: |
-          docker build --platform linux/amd64 --progress=plain -t scrapnode/base:latest docker/base
+          docker build . -f .docker/Dockerfile-build --tag ${{ secrets.ECR_USERNAME }}/kratos:${{ needs.prepare.outputs.BUILD_ID }}
+          docker push ${{ secrets.ECR_USERNAME }}/kratos:${{ needs.prepare.outputs.BUILD_ID }}
 
-          docker build . --tag ${{ secrets.ECR_USERNAME }}/mstp-account:${{ needs.prepare.outputs.BUILD_ID }}
-          docker push ${{ secrets.ECR_USERNAME }}/mstp-account:${{ needs.prepare.outputs.BUILD_ID }}
-
-          docker build . --tag ${{ secrets.ECR_USERNAME }}/mstp-account:latest
-          docker push ${{ secrets.ECR_USERNAME }}/mstp-account:latest
+          docker build . -f .docker/Dockerfile-build --tag ${{ secrets.ECR_USERNAME }}/kratos:latest
+          docker push ${{ secrets.ECR_USERNAME }}/kratos:latest
