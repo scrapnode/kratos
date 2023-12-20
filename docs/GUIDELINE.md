@@ -958,40 +958,6 @@ courier:
   #
   message_retries: 5
 
-  ## worker ##
-  #
-  # Configures the dispatch worker.
-  #
-  worker:
-    
-    ## pull_wait ##
-    #
-    # Defines how long the worker waits before pulling messages from the queue again.
-    #
-    # Default value: 1s
-    #
-    # Set this value using environment variables on
-    # - Linux/macOS:
-    #    $ export COURIER_WORKER_PULL_WAIT=<value>
-    # - Windows Command Line (CMD):
-    #    > set COURIER_WORKER_PULL_WAIT=<value>
-    #
-    pull_wait: 10s
-
-    ## pull_count ##
-    #
-    # Defines how many messages are pulled from the queue at once.
-    #
-    # Default value: 10
-    #
-    # Set this value using environment variables on
-    # - Linux/macOS:
-    #    $ export COURIER_WORKER_PULL_COUNT=<value>
-    # - Windows Command Line (CMD):
-    #    > set COURIER_WORKER_PULL_COUNT=<value>
-    #
-    pull_count: 10
-
   ## Delivery Strategy ##
   #
   # Defines how emails will be sent, either through SMTP (default) or HTTP.
