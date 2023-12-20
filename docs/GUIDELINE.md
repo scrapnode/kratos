@@ -437,7 +437,7 @@ In this guideline I am going to use the domain `https://kratos.scrapnode.com` as
 
 #### Registration
 
-1. Init the registration flow to get the flow information
+1. Init the registration flow
 
     Request
 
@@ -876,4 +876,205 @@ In this guideline I am going to use the domain `https://kratos.scrapnode.com` as
 
 #### Login
 
+1. Init the login flow
 
+    Request
+
+    ```bash
+    curl --location 'https://kratos.scrapnode.com/self-service/login/browser?refresh=true' \
+    --header 'Accept: application/json' \
+    ```
+
+    Response Body
+
+    ```json
+    {
+        "id": "04d459df-5c63-44eb-830a-665eeeaed215",
+        "organization_id": null,
+        "type": "browser",
+        "expires_at": "2023-12-20T13:21:15.823403688Z",
+        "issued_at": "2023-12-20T13:11:15.823403688Z",
+        "request_url": "https://kratos.scrapnode.com/self-service/login/browser?refresh=true",
+        "ui": {
+            "action": "https://kratos.scrapnode.com/self-service/login?flow=04d459df-5c63-44eb-830a-665eeeaed215",
+            "method": "POST",
+            "nodes": [
+                {
+                    "type": "input",
+                    "group": "default",
+                    "attributes": {
+                        "name": "csrf_token",
+                        "type": "hidden",
+                        "value": "I2PGDhh/vNT/9W0wunEMViu8dYDvgSJvlCqWvQHxAafRwkxG9G0rVCVyCsnViwjd9PmtpR8jbJAK4IUyoLFQiQ==",
+                        "required": true,
+                        "disabled": false,
+                        "node_type": "input"
+                    },
+                    "messages": [],
+                    "meta": {}
+                },
+                {
+                    "type": "input",
+                    "group": "default",
+                    "attributes": {
+                        "name": "identifier",
+                        "type": "text",
+                        "value": "",
+                        "required": true,
+                        "disabled": false,
+                        "node_type": "input"
+                    },
+                    "messages": [],
+                    "meta": {
+                        "label": {
+                            "id": 1070002,
+                            "text": "E-Mail",
+                            "type": "info",
+                            "context": {
+                                "title": "E-Mail"
+                            }
+                        }
+                    }
+                },
+                {
+                    "type": "input",
+                    "group": "password",
+                    "attributes": {
+                        "name": "password",
+                        "type": "password",
+                        "required": true,
+                        "autocomplete": "current-password",
+                        "disabled": false,
+                        "node_type": "input"
+                    },
+                    "messages": [],
+                    "meta": {
+                        "label": {
+                            "id": 1070001,
+                            "text": "Password",
+                            "type": "info"
+                        }
+                    }
+                },
+                {
+                    "type": "input",
+                    "group": "password",
+                    "attributes": {
+                        "name": "method",
+                        "type": "submit",
+                        "value": "password",
+                        "disabled": false,
+                        "node_type": "input"
+                    },
+                    "messages": [],
+                    "meta": {
+                        "label": {
+                            "id": 1010001,
+                            "text": "Sign in",
+                            "type": "info"
+                        }
+                    }
+                }
+            ]
+        },
+        "created_at": "2023-12-20T13:11:15.825857Z",
+        "updated_at": "2023-12-20T13:11:15.825857Z",
+        "refresh": false,
+        "requested_aal": "aal1",
+        "state": "choose_method"
+    }
+    ```
+
+2. Submit the login flow with both information you obtained from the step #1 and user credentials 
+
+    Request
+
+    - Query `flow`: obtain from the `id` attribute in the response body in step #1
+    - Body `identifier`: the account email
+    - Body `password`: the account password
+    - Body `csrf_token`: the CSRF token that is obtained from the `ui.nodes[0].attributes.value` in the response body in step #1 
+
+    ```bash
+    curl --location 'https://kratos.scrapnode.com/self-service/login?flow=04d459df-5c63-44eb-830a-665eeeaed215' \
+    --header 'Content-Type: application/x-www-form-urlencoded' \
+    --header 'Accept: application/json' \
+    --header 'Cookie: csrf_token_6c0cb2d8e17be2aeca168648961b34f465bed2ffa37dd7fa2ad8b4867a3b1f15=5GkVMgKWRLEDRqvQuNv+FwRCk89UozeJ2OG454/ZSIE=' \
+    --data-urlencode 'method=password' \
+    --data-urlencode 'password=1password' \
+    --data-urlencode 'identifier=gyh55799@nezid.com' \
+    --data-urlencode 'csrf_token=I2PGDhh/vNT/9W0wunEMViu8dYDvgSJvlCqWvQHxAafRwkxG9G0rVCVyCsnViwjd9PmtpR8jbJAK4IUyoLFQiQ=='
+    ```
+
+    Response Body
+
+    ```json
+    {
+        "session": {
+            "id": "468ca40c-ae5b-4037-8914-f65597626c3d",
+            "active": true,
+            "expires_at": "2023-12-21T13:13:35.413927139Z",
+            "authenticated_at": "2023-12-20T13:13:35.413927139Z",
+            "authenticator_assurance_level": "aal1",
+            "authentication_methods": [
+                {
+                    "method": "password",
+                    "aal": "aal1",
+                    "completed_at": "2023-12-20T13:13:35.413921865Z"
+                }
+            ],
+            "issued_at": "2023-12-20T13:13:35.413927139Z",
+            "identity": {
+                "id": "d95ad291-d27b-4eaa-89bb-4c151c757ae6",
+                "schema_id": "default",
+                "schema_url": "https://kratos.scrapnode.com/schemas/ZGVmYXVsdA",
+                "state": "active",
+                "state_changed_at": "2023-12-20T09:42:28.832395Z",
+                "traits": {
+                    "email": "gyh55799@nezid.com"
+                },
+                "verifiable_addresses": [
+                    {
+                        "id": "d25a17e9-c624-46be-a0c1-5002b3495c8a",
+                        "value": "gyh55799@nezid.com",
+                        "verified": true,
+                        "via": "email",
+                        "status": "completed",
+                        "verified_at": "2023-12-20T09:46:06.984885Z",
+                        "created_at": "2023-12-20T09:42:28.834034Z",
+                        "updated_at": "2023-12-20T09:42:28.834034Z"
+                    }
+                ],
+                "recovery_addresses": [
+                    {
+                        "id": "f45a9abe-9ef3-4761-8936-128e7e3616dc",
+                        "value": "gyh55799@nezid.com",
+                        "via": "email",
+                        "created_at": "2023-12-20T09:42:28.834411Z",
+                        "updated_at": "2023-12-20T09:42:28.834411Z"
+                    }
+                ],
+                "metadata_public": null,
+                "created_at": "2023-12-20T09:42:28.833549Z",
+                "updated_at": "2023-12-20T09:42:28.833549Z",
+                "organization_id": null
+            },
+            "devices": [
+                {
+                    "id": "0ea9cb85-b617-4dc3-b244-920e3df23522",
+                    "ip_address": "10.42.0.1",
+                    "user_agent": "PostmanRuntime/7.36.0",
+                    "location": "VN"
+                }
+            ]
+        }
+    }
+    ```
+
+    Response Header
+
+    ```
+    set-cookie: csrf_token_6c0cb2d8e17be2aeca168648961b34f465bed2ffa37dd7fa2ad8b4867a3b1f15=5GkVMgKWRLEDRqvQuNv+FwRCk89UozeJ2OG454/ZSIE=; Path=/; Domain=scrapnode.com; Max-Age=31536000; HttpOnly; Secure; SameSite=Lax
+    set-cookie: ory_kratos_session=MTcwMzA3ODAxNXx2QU1sR1ZzNWJhX1gtXzJZa1Vtck9NbVVxWklVOWJZRS14SXpBVWVWY3lsRFJFZzRzV0pUaW9RY3VoVndjSW14c0gyOGxHRjNFd29kS3Q2S2RaTGZxQmltYjhWbFdKVXJBaFpZRkZacTc0cHJOWlBjVFR1ellxV2JZWWtjQXhrVEZZODUxeExFTGM3VjNuSV9LUHZUSFVzc0d2cHZrclZYWGxEN1lmQUR0QWRhT3ItOVhXc1piYThmX1J0enhnSThNYWRXT2dIUmcwS3VHcW40THplTTZmV2dSaUtTc29nREg3QzF2dE8yWFNwSWU1dW1KVnlCbnBnc1FFUGt2eXVkNjRJY2lKNEQtRXBLSzJpSkRLV0l8qVcR1CNST0wrxpVBsAjSqxXy9kN0qgPq0J5YlylwhdY=; Path=/; Domain=scrapnode.com; Expires=Thu, 21 Dec 2023 13:13:34 GMT; Max-Age=86399; HttpOnly; Secure; SameSite=Lax
+    ```
+
+3. In further requests, you need to sent a request the header `Cookie` with a value from `set-cookie` that has value `ory_kratos_session`
