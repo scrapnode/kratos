@@ -1,4 +1,4 @@
-## Deployment
+## Guidelines
 
 In this tutorial, I will guide you how to deploy the Kratos service to Kubernetes. The requirement of infratructure includes
 
@@ -12,6 +12,61 @@ In this tutorial, I will guide you how to deploy the Kratos service to Kubernete
 - Make sure you have configured sticky session for loadbalancer
 - If you are using DNS service (Cloudflare), make sure you use Strict SSL configurion. That mean the connection between your server and Cloudflare must be HTTPS to make cookie-session model works well
 - Never, ever expose Kratos Admin interface (port `4434`) to the public internet
+
+### Build Docker image
+
+You can use this command to build the Docker image that will be used to deploy to Kubernetes
+
+```bash
+docker build . -f .docker/Dockerfile-build --tag scrapnode/kratos:latest
+
+[+] Building 177.9s (21/21) FINISHED                                                                                                                                                                                      
+ => [internal] load build definition from Dockerfile-build                                                                                                                                                           0.0s
+ => => transferring dockerfile: 1.34kB                                                                                                                                                                               0.0s
+ => [internal] load .dockerignore                                                                                                                                                                                    0.0s
+ => => transferring context: 203B                                                                                                                                                                                    0.0s
+ => resolve image config for docker.io/docker/dockerfile:1-experimental                                                                                                                                              3.1s
+ => CACHED docker-image://docker.io/docker/dockerfile:1-experimental@sha256:600e5c62eedff338b3f7a0850beb7c05866e0ef27b2d2e8c02aa468e78496ff5                                                                         0.0s
+ => [internal] load metadata for gcr.io/distroless/base-nossl-debian12:nonroot                                                                                                                                       0.8s
+ => [internal] load metadata for docker.io/library/golang:1.21                                                                                                                                                       4.0s
+ => [builder  1/10] FROM docker.io/library/golang:1.21@sha256:1a9d253b11048b1c76b690b0c09d78d200652e4e913d5d1dcc8eb8d0d932bfe4                                                                                      23.9s
+ => => resolve docker.io/library/golang:1.21@sha256:1a9d253b11048b1c76b690b0c09d78d200652e4e913d5d1dcc8eb8d0d932bfe4                                                                                                 0.0s
+ => => sha256:1a9d253b11048b1c76b690b0c09d78d200652e4e913d5d1dcc8eb8d0d932bfe4 2.36kB / 2.36kB                                                                                                                       0.0s
+ => => sha256:e30422593ba0e5ef53b7ad32685a9788f630ccf2357d12a98cbaabfd0e8905db 1.58kB / 1.58kB                                                                                                                       0.0s
+ => => sha256:b5de22c0f5cd2ea2bb6c0524478db95bff5a294c99419ccd4a9d3ccc9873bad9 24.05MB / 24.05MB                                                                                                                    15.4s
+ => => sha256:533c8541132bd6cceaa971c458463325521909fbd6262d798c32d3ed30bea435 7.55kB / 7.55kB                                                                                                                       0.0s
+ => => sha256:bc0734b949dcdcabe5bfdf0c8b9f44491e0fce04cb10c9c6e76282b9f6abdf01 49.56MB / 49.56MB                                                                                                                     3.7s
+ => => sha256:917ee5330e73737d6095a802333d311648959399ff2c067150890162e720f863 64.13MB / 64.13MB                                                                                                                    10.0s
+ => => sha256:bed956b3d08c0b1903d9af3e6850930eacf865b23f62bd8cf46eb1de1325c39b 92.36MB / 92.36MB                                                                                                                    13.4s
+ => => extracting sha256:bc0734b949dcdcabe5bfdf0c8b9f44491e0fce04cb10c9c6e76282b9f6abdf01                                                                                                                            2.0s
+ => => sha256:6febcc5ccdb1e72a8b6ce15a28ee29f8e9bd7fc5debbcf94903105c2c2578698 66.98MB / 66.98MB                                                                                                                    16.5s
+ => => sha256:51575304560117c73ccac37a74ad8cab516786a9861308fc3e3e0575d0a06c4d 155B / 155B                                                                                                                          13.8s
+ => => extracting sha256:b5de22c0f5cd2ea2bb6c0524478db95bff5a294c99419ccd4a9d3ccc9873bad9                                                                                                                            0.7s
+ => => extracting sha256:917ee5330e73737d6095a802333d311648959399ff2c067150890162e720f863                                                                                                                            2.0s
+ => => extracting sha256:bed956b3d08c0b1903d9af3e6850930eacf865b23f62bd8cf46eb1de1325c39b                                                                                                                            2.6s
+ => => extracting sha256:6febcc5ccdb1e72a8b6ce15a28ee29f8e9bd7fc5debbcf94903105c2c2578698                                                                                                                            2.7s
+ => => extracting sha256:51575304560117c73ccac37a74ad8cab516786a9861308fc3e3e0575d0a06c4d                                                                                                                            0.0s
+ => [runner 1/3] FROM gcr.io/distroless/base-nossl-debian12:nonroot@sha256:8c957f0c06030921ee439d028b5778dd1cee9e095092833fe8e4ee795d3a2298                                                                          0.0s
+ => [internal] load build context                                                                                                                                                                                    0.5s
+ => => transferring context: 9.63MB                                                                                                                                                                                  0.4s
+ => [builder  2/10] RUN apt-get update && apt-get upgrade -y &&  mkdir -p /var/lib/sqlite                                                                                                                            4.6s
+ => [builder  3/10] WORKDIR /go/src/github.com/ory/kratos                                                                                                                                                            0.0s
+ => [builder  4/10] COPY go.mod go.mod                                                                                                                                                                               0.0s
+ => [builder  5/10] COPY go.sum go.sum                                                                                                                                                                               0.0s 
+ => [builder  6/10] COPY internal/httpclient/go.* internal/httpclient/                                                                                                                                               0.0s 
+ => [builder  7/10] COPY internal/client-go/go.* internal/client-go/                                                                                                                                                 0.0s 
+ => [builder  8/10] RUN go mod download                                                                                                                                                                             54.3s 
+ => [builder  9/10] COPY . .                                                                                                                                                                                         0.4s
+ => [builder 10/10] RUN --mount=type=cache,target=/root/.cache/go-build go build -tags sqlite   -ldflags="-X 'github.com/ory/kratos/driver/config.Version=${VERSION}' -X 'github.com/ory/kratos/driver/config.Date  86.7s
+ => CACHED [runner 2/3] COPY --from=builder --chown=nonroot:nonroot /var/lib/sqlite /var/lib/sqlite                                                                                                                  0.0s
+ => [runner 3/3] COPY --from=builder --chown=nonroot:nonroot /usr/bin/kratos /usr/bin/kratos                                                                                                                         0.1s
+ => exporting to image                                                                                                                                                                                               0.2s
+ => => exporting layers                                                                                                                                                                                              0.2s
+ => => writing image sha256:94cef24141fb60735649bb65645d95e2566296bf92e7982d7f49cdf95a7908eb                                                                                                                         0.0s
+ => => naming to docker.io/scrapnode/kratos:latest  
+ 
+Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them                                    
+```
 
 ### Prepare configurations
 
