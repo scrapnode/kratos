@@ -15,7 +15,7 @@ In this tutorial, I will guide you how to deploy the Kratos service to Kubernete
 
 ### Build Docker image
 
-You can use this command to build the Docker image that will be used to deploy to Kubernetes
+You can use this command to build the Docker image that will be used to deploy to Kubernetes. Make sure you replace `scrapnode/kratos` with your docker image name
 
 ```bash
 docker build . -f .docker/Dockerfile-build --tag scrapnode/kratos:latest
