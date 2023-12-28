@@ -3,7 +3,7 @@
 In this tutorial, I will guide you how to deploy the Kratos service to Kubernetes. The requirement of infratructure includes
 
 - Kubernetes > v1.22
-- Postgres > v13.0
+- Postgres > v13.0 or Mysql > v8.0
 - Redis > v6.0
 - Both UI & Kratos must be configured under same domain and SSL must be turned on. For example you will have 2 domain `auth.example.com` and `kratos.example.com` for UI and Kratos service respectively
 
@@ -123,7 +123,10 @@ data:
 
 There are so many configurations you can set, but there are some important parts you need to change before deploy your Kratos servcie
 
-- `dns`: Postgres Connection String (example: `postgres://POSTGRES_USER:POSTGRES_PASSOWRD@POSTGRES_HOST:5432/POSTGRES_DATABASE?connect_timeout=30`). Make sure your replaces `POSTGRES_USER`, `POSTGRES_PASSOWRD`, `POSTGRES_HOST` and `POSTGRES_DATABASE` with correct configuration
+- `dns`: Database Connection String, we are supporting both PostgreSQL and MySQL database. Examples:
+    
+    - PostgreSQL connection string: `postgres://postgres:changemenow@127.0.0.1/postgres?connect_timeout=30&sslmode=disable`
+    - MySql connection string: `root:changemenow@tcp(127.0.0.1:3306)/default?charset=utf8mb4&&parseTime=True&loc=Local`
 
 - Replace all example configuration for UI domain with your UI hosted domain(example: `https://auth.example.com` and any value with `example.com` )
     - `selfservice.default_browser_return_url`
