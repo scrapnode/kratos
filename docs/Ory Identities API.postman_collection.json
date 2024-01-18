@@ -1,0 +1,2520 @@
+{
+	"info": {
+		"_postman_id": "93b0e6f3-8e1d-4485-ae78-96680a83d16d",
+		"name": "Ory Identities API",
+		"description": "This is the API specification for Ory Identities with features such as registration, login, recovery, account verification, profile settings, password reset, identity management, session management, email and sms delivery, and more.\n\n\nContact Support:\n Email: office@ory.sh",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17525419",
+		"_collection_link": "https://upmesh.postman.co/workspace/My-Workspace~074eb37e-4af0-4d5c-8631-074176abf3da/collection/17525419-93b0e6f3-8e1d-4485-ae78-96680a83d16d?action=share&source=collection_link&creator=17525419"
+	},
+	"item": [
+		{
+			"name": "health",
+			"item": [
+				{
+					"name": "alive",
+					"item": [
+						{
+							"name": "Check HTTP Server Status",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/health/alive",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"health",
+										"alive"
+									]
+								},
+								"description": "This endpoint returns a HTTP 200 status code when Ory Kratos is accepting incoming\nHTTP requests. This status does currently not include checks whether the database connection is working.\n\nIf the service supports TLS Edge Termination, this endpoint does not require the\n`X-Forwarded-Proto` header to be set.\n\nBe aware that if you are running multiple nodes of this service, the health status will never\nrefer to the cluster state, only to a single instance."
+							},
+							"response": [
+								{
+									"name": "Ory Kratos is ready to accept connections.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/health/alive",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"health",
+												"alive"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"status\": \"<string>\"\n}"
+								},
+								{
+									"name": "Unexpected error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/health/alive",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"health",
+												"alive"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "ready",
+					"item": [
+						{
+							"name": "Check HTTP Server and Database Status",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/health/ready",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"health",
+										"ready"
+									]
+								},
+								"description": "This endpoint returns a HTTP 200 status code when Ory Kratos is up running and the environment dependencies (e.g.\nthe database) are responsive as well.\n\nIf the service supports TLS Edge Termination, this endpoint does not require the\n`X-Forwarded-Proto` header to be set.\n\nBe aware that if you are running multiple nodes of Ory Kratos, the health status will never\nrefer to the cluster state, only to a single instance."
+							},
+							"response": [
+								{
+									"name": "Ory Kratos is ready to accept requests.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/health/ready",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"health",
+												"ready"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"status\": \"<string>\"\n}"
+								},
+								{
+									"name": "Ory Kratos is not yet ready to accept requests.",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/health/ready",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"health",
+												"ready"
+											]
+										}
+									},
+									"status": "Service Unavailable",
+									"code": 503,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"errors\": {\n    \"est_086\": \"<string>\",\n    \"commodo_5e\": \"<string>\",\n    \"in_d7\": \"<string>\"\n  }\n}"
+								},
+								{
+									"name": "Unexpected error",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/health/ready",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"health",
+												"ready"
+											]
+										}
+									},
+									"status": "Internal Server Error",
+									"code": 500,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": "<string>"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "identities",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "Get an Identity",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "key",
+													"value": "Authorization",
+													"type": "string"
+												},
+												{
+													"key": "value",
+													"value": "{{apiKey}}",
+													"type": "string"
+												},
+												{
+													"key": "in",
+													"value": "header",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/admin/identities/:id?include_credential=password&include_credential=oidc",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"identities",
+												":id"
+											],
+											"query": [
+												{
+													"key": "include_credential",
+													"value": "password"
+												},
+												{
+													"key": "include_credential",
+													"value": "oidc"
+												}
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "7ca3df0e-874b-44f7-a258-6223d49f5952",
+													"description": "(Required) ID must be set to the ID of identity you want to get"
+												}
+											]
+										},
+										"description": "Return an [identity](https://www.ory.sh/docs/kratos/concepts/identity-user-model) by its ID. You can optionally\ninclude credentials (e.g. social sign in connections) in the response by using the `include_credential` query parameter."
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/admin/identities/:id?include_credential=password&include_credential=oidc",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"identities",
+														":id"
+													],
+													"query": [
+														{
+															"key": "include_credential",
+															"value": "password"
+														},
+														{
+															"key": "include_credential",
+															"value": "oidc"
+														}
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "7ca3df0e-874b-44f7-a258-6223d49f5952",
+															"description": "(Required) ID must be set to the ID of identity you want to get"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "private, no-cache, no-store, must-revalidate"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Date",
+													"value": "Wed, 20 Dec 2023 07:32:19 GMT"
+												},
+												{
+													"key": "Content-Length",
+													"value": "1133"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"id\": \"7ca3df0e-874b-44f7-a258-6223d49f5952\",\n    \"credentials\": {\n        \"password\": {\n            \"type\": \"password\",\n            \"identifiers\": [\n                \"tuan.nguyen930708@gmail.com\"\n            ],\n            \"config\": {\n                \"hashed_password\": \"$2a$12$/dkPt64Ngazx/acXfp8tTOwCRYGNThCm9rZNyrt1a2Ygtjksatgre\"\n            },\n            \"version\": 0,\n            \"created_at\": \"2023-12-20T07:20:43.515658Z\",\n            \"updated_at\": \"2023-12-20T07:20:43.515658Z\"\n        }\n    },\n    \"schema_id\": \"default\",\n    \"schema_url\": \"https://kratos.scrapnode.com/schemas/ZGVmYXVsdA\",\n    \"state\": \"active\",\n    \"state_changed_at\": \"2023-12-20T07:20:43.5115Z\",\n    \"traits\": {\n        \"email\": \"tuan.nguyen930708@gmail.com\"\n    },\n    \"verifiable_addresses\": [\n        {\n            \"id\": \"688c6fc6-0d75-49bb-93ed-0860d1c600c0\",\n            \"value\": \"tuan.nguyen930708@gmail.com\",\n            \"verified\": false,\n            \"via\": \"email\",\n            \"status\": \"pending\",\n            \"created_at\": \"2023-12-20T07:20:43.513698Z\",\n            \"updated_at\": \"2023-12-20T07:20:43.513698Z\"\n        }\n    ],\n    \"recovery_addresses\": [\n        {\n            \"id\": \"c71a5f75-7865-47ce-93c4-28bd3248fada\",\n            \"value\": \"tuan.nguyen930708@gmail.com\",\n            \"via\": \"email\",\n            \"created_at\": \"2023-12-20T07:20:43.514484Z\",\n            \"updated_at\": \"2023-12-20T07:20:43.514484Z\"\n        }\n    ],\n    \"metadata_public\": null,\n    \"metadata_admin\": null,\n    \"created_at\": \"2023-12-20T07:20:43.512549Z\",\n    \"updated_at\": \"2023-12-20T07:20:43.512549Z\",\n    \"organization_id\": null\n}"
+										}
+									]
+								},
+								{
+									"name": "Update an Indentity",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "key",
+													"value": "Authorization",
+													"type": "string"
+												},
+												{
+													"key": "value",
+													"value": "{{apiKey}}",
+													"type": "string"
+												},
+												{
+													"key": "in",
+													"value": "header",
+													"type": "string"
+												}
+											]
+										},
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "[\n  {\n    \"op\": \"add\",\n    \"path\": \"/metadata_public/everyone\",\n    \"value\": {\n        \"can\": \"read\",\n        \"cannot\": \"modify\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/metadata_public/admin\",\n    \"value\": \"can_do_whatever_admin_want_to\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/metadata_admin/everyone\",\n    \"value\": {\n        \"cannot\": \"read_or_modify\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/metadata_admin/admin\",\n    \"value\": \"can_do_whatever_admin_want_to\"\n  }\n]",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/identities/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"identities",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "7ca3df0e-874b-44f7-a258-6223d49f5952",
+													"description": "(Required) ID must be set to the ID of identity you want to update"
+												}
+											]
+										},
+										"description": "This endpoint updates an [identity](https://www.ory.sh/docs/kratos/concepts/identity-user-model). The full identity\npayload (except credentials) is expected. It is possible to update the identity's credentials as well."
+									},
+									"response": [
+										{
+											"name": "Mark an email as verified manually",
+											"originalRequest": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/verifiable_addresses/0/verified\",\n    \"value\": true\n  }\n]",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/admin/identities/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"identities",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "7ca3df0e-874b-44f7-a258-6223d49f5952",
+															"description": "(Required) ID must be set to the ID of identity you want to update"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "private, no-cache, no-store, must-revalidate"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Date",
+													"value": "Wed, 20 Dec 2023 07:37:51 GMT"
+												},
+												{
+													"key": "Content-Length",
+													"value": "1087"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"id\": \"7ca3df0e-874b-44f7-a258-6223d49f5952\",\n    \"credentials\": {\n        \"password\": {\n            \"type\": \"password\",\n            \"identifiers\": [\n                \"tuan.nguyen930708@gmail.com\"\n            ],\n            \"version\": 0,\n            \"created_at\": \"2023-12-20T07:20:43.515658Z\",\n            \"updated_at\": \"2023-12-20T07:20:43.515658Z\"\n        }\n    },\n    \"schema_id\": \"default\",\n    \"schema_url\": \"https://kratos.scrapnode.com/schemas/ZGVmYXVsdA\",\n    \"state\": \"active\",\n    \"state_changed_at\": \"2023-12-20T07:20:43.5115Z\",\n    \"traits\": {\n        \"email\": \"tuan.nguyen930708@gmail.com\"\n    },\n    \"verifiable_addresses\": [\n        {\n            \"id\": \"688c6fc6-0d75-49bb-93ed-0860d1c600c0\",\n            \"value\": \"tuan.nguyen930708@gmail.com\",\n            \"verified\": true,\n            \"via\": \"email\",\n            \"status\": \"pending\",\n            \"verified_at\": \"2023-12-20T07:37:51.488354267Z\",\n            \"created_at\": \"2023-12-20T07:20:43.513698Z\",\n            \"updated_at\": \"2023-12-20T07:37:51.490121Z\"\n        }\n    ],\n    \"recovery_addresses\": [\n        {\n            \"id\": \"c71a5f75-7865-47ce-93c4-28bd3248fada\",\n            \"value\": \"tuan.nguyen930708@gmail.com\",\n            \"via\": \"email\",\n            \"created_at\": \"2023-12-20T07:20:43.514484Z\",\n            \"updated_at\": \"2023-12-20T07:20:43.514484Z\"\n        }\n    ],\n    \"metadata_public\": null,\n    \"metadata_admin\": null,\n    \"created_at\": \"2023-12-20T07:20:43.512549Z\",\n    \"updated_at\": \"2023-12-20T07:20:43.512549Z\",\n    \"organization_id\": null\n}"
+										},
+										{
+											"name": "Add some propeties to metadata_public (or metadata_admin)",
+											"originalRequest": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "[\n  {\n    \"op\": \"add\",\n    \"path\": \"/metadata_public/everyone\",\n    \"value\": {\n        \"can\": \"read\",\n        \"cannot\": \"modify\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/metadata_public/admin\",\n    \"value\": \"can_do_whatever_admin_want_to\"\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/metadata_admin/everyone\",\n    \"value\": {\n        \"cannot\": \"read_or_modify\"\n    }\n  },\n  {\n    \"op\": \"add\",\n    \"path\": \"/metadata_admin/admin\",\n    \"value\": \"can_do_whatever_admin_want_to\"\n  }\n]",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/admin/identities/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"admin",
+														"identities",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "7ca3df0e-874b-44f7-a258-6223d49f5952",
+															"description": "(Required) ID must be set to the ID of identity you want to update"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Cache-Control",
+													"value": "private, no-cache, no-store, must-revalidate"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Date",
+													"value": "Wed, 20 Dec 2023 07:45:10 GMT"
+												},
+												{
+													"key": "Content-Length",
+													"value": "1241"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"id\": \"7ca3df0e-874b-44f7-a258-6223d49f5952\",\n    \"credentials\": {\n        \"password\": {\n            \"type\": \"password\",\n            \"identifiers\": [\n                \"tuan.nguyen930708@gmail.com\"\n            ],\n            \"version\": 0,\n            \"created_at\": \"2023-12-20T07:20:43.515658Z\",\n            \"updated_at\": \"2023-12-20T07:37:51.491144Z\"\n        }\n    },\n    \"schema_id\": \"default\",\n    \"schema_url\": \"https://kratos.scrapnode.com/schemas/ZGVmYXVsdA\",\n    \"state\": \"active\",\n    \"state_changed_at\": \"2023-12-20T07:20:43.5115Z\",\n    \"traits\": {\n        \"email\": \"tuan.nguyen930708@gmail.com\"\n    },\n    \"verifiable_addresses\": [\n        {\n            \"id\": \"688c6fc6-0d75-49bb-93ed-0860d1c600c0\",\n            \"value\": \"tuan.nguyen930708@gmail.com\",\n            \"verified\": true,\n            \"via\": \"email\",\n            \"status\": \"pending\",\n            \"verified_at\": \"2023-12-20T07:37:51.488354Z\",\n            \"created_at\": \"2023-12-20T07:20:43.513698Z\",\n            \"updated_at\": \"2023-12-20T07:37:51.490121Z\"\n        }\n    ],\n    \"recovery_addresses\": [\n        {\n            \"id\": \"c71a5f75-7865-47ce-93c4-28bd3248fada\",\n            \"value\": \"tuan.nguyen930708@gmail.com\",\n            \"via\": \"email\",\n            \"created_at\": \"2023-12-20T07:20:43.514484Z\",\n            \"updated_at\": \"2023-12-20T07:20:43.514484Z\"\n        }\n    ],\n    \"metadata_public\": {\n        \"everyone\": {\n            \"can\": \"read\",\n            \"cannot\": \"modify\"\n        },\n        \"admin\": \"can_do_whatever_admin_want_to\"\n    },\n    \"metadata_admin\": {\n        \"everyone\": {\n            \"cannot\": \"read_or_modify\"\n        },\n        \"admin\": \"can_do_whatever_admin_want_to\"\n    },\n    \"created_at\": \"2023-12-20T07:20:43.512549Z\",\n    \"updated_at\": \"2023-12-20T07:20:43.512549Z\",\n    \"organization_id\": null\n}"
+										}
+									]
+								},
+								{
+									"name": "Delete an Identity",
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "key",
+													"value": "Authorization",
+													"type": "string"
+												},
+												{
+													"key": "value",
+													"value": "{{apiKey}}",
+													"type": "string"
+												},
+												{
+													"key": "in",
+													"value": "header",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/admin/identities/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"identities",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "19fd3f6c-34fe-4594-a18b-fbd56fdcef5e",
+													"description": "(Required) ID must be set to the ID of identity you want to get"
+												}
+											]
+										},
+										"description": "Return an [identity](https://www.ory.sh/docs/kratos/concepts/identity-user-model) by its ID. You can optionally\ninclude credentials (e.g. social sign in connections) in the response by using the `include_credential` query parameter."
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Create an Identity",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"schema_id\": \"default\",\n  \"traits\": {\n    \"email\": \"tuan.nguyen930708@gmail.com\"\n  },\n  \"credentials\": {\n    \"password\": {\n      \"config\": {\n        \"password\": \"thepassword_thatis_STRONG\"\n      }\n    }\n  }\n}\n",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/admin/identities",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"identities"
+									]
+								},
+								"description": "Create an [identity](https://www.ory.sh/docs/kratos/concepts/identity-user-model).  This endpoint can also be used to\n[import credentials](https://www.ory.sh/docs/kratos/manage-identities/import-user-accounts-identities)\nfor instance passwords, social sign in configurations or multifactor methods."
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"schema_id\": \"default\",\n  \"traits\": {\n    \"email\": \"tuan.nguyen930708@gmail.com\"\n  },\n  \"state\": \"active\",\n  \"credentials\": {\n    \"password\": {\n      \"config\": {\n        \"password\": \"thepassword_thatis_STRONG\"\n      }\n    }\n  }\n}\n",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/identities",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"identities"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Location",
+											"value": "http://kratos:4434/identities/7ca3df0e-874b-44f7-a258-6223d49f5952"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 20 Dec 2023 07:20:43 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1010"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"7ca3df0e-874b-44f7-a258-6223d49f5952\",\n    \"credentials\": {\n        \"password\": {\n            \"type\": \"password\",\n            \"identifiers\": [\n                \"tuan.nguyen930708@gmail.com\"\n            ],\n            \"version\": 0,\n            \"created_at\": \"0001-01-01T00:00:00Z\",\n            \"updated_at\": \"0001-01-01T00:00:00Z\"\n        }\n    },\n    \"schema_id\": \"default\",\n    \"schema_url\": \"https://kratos.scrapnode.com/schemas/ZGVmYXVsdA\",\n    \"state\": \"active\",\n    \"state_changed_at\": \"2023-12-20T07:20:43.511500574Z\",\n    \"traits\": {\n        \"email\": \"tuan.nguyen930708@gmail.com\"\n    },\n    \"verifiable_addresses\": [\n        {\n            \"id\": \"688c6fc6-0d75-49bb-93ed-0860d1c600c0\",\n            \"value\": \"tuan.nguyen930708@gmail.com\",\n            \"verified\": false,\n            \"via\": \"email\",\n            \"status\": \"pending\",\n            \"created_at\": \"2023-12-20T07:20:43.513698Z\",\n            \"updated_at\": \"2023-12-20T07:20:43.513698Z\"\n        }\n    ],\n    \"recovery_addresses\": [\n        {\n            \"id\": \"c71a5f75-7865-47ce-93c4-28bd3248fada\",\n            \"value\": \"tuan.nguyen930708@gmail.com\",\n            \"via\": \"email\",\n            \"created_at\": \"2023-12-20T07:20:43.514484Z\",\n            \"updated_at\": \"2023-12-20T07:20:43.514484Z\"\n        }\n    ],\n    \"metadata_public\": null,\n    \"created_at\": \"2023-12-20T07:20:43.512549Z\",\n    \"updated_at\": \"2023-12-20T07:20:43.512549Z\",\n    \"organization_id\": null\n}"
+								}
+							]
+						},
+						{
+							"name": "List indentities",
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "key",
+											"value": "Authorization",
+											"type": "string"
+										},
+										{
+											"key": "value",
+											"value": "{{apiKey}}",
+											"type": "string"
+										},
+										{
+											"key": "in",
+											"value": "header",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/admin/identities?per_page=250&page=0&credentials_identifier=tuan.nguyen930708@gmail.com",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"admin",
+										"identities"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "250"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "credentials_identifier",
+											"value": "tuan.nguyen930708@gmail.com"
+										}
+									]
+								},
+								"description": "Create an [identity](https://www.ory.sh/docs/kratos/concepts/identity-user-model).  This endpoint can also be used to\n[import credentials](https://www.ory.sh/docs/kratos/manage-identities/import-user-accounts-identities)\nfor instance passwords, social sign in configurations or multifactor methods."
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"schema_id\": \"default\",\n  \"traits\": {\n    \"email\": \"tuan.nguyen930708@gmail.com\"\n  },\n  \"state\": \"active\",\n  \"credentials\": {\n    \"password\": {\n      \"config\": {\n        \"password\": \"thepassword_thatis_STRONG\"\n      }\n    }\n  }\n}\n",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/admin/identities",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"admin",
+												"identities"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Location",
+											"value": "http://kratos:4434/identities/7ca3df0e-874b-44f7-a258-6223d49f5952"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 20 Dec 2023 07:20:43 GMT"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1010"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"7ca3df0e-874b-44f7-a258-6223d49f5952\",\n    \"credentials\": {\n        \"password\": {\n            \"type\": \"password\",\n            \"identifiers\": [\n                \"tuan.nguyen930708@gmail.com\"\n            ],\n            \"version\": 0,\n            \"created_at\": \"0001-01-01T00:00:00Z\",\n            \"updated_at\": \"0001-01-01T00:00:00Z\"\n        }\n    },\n    \"schema_id\": \"default\",\n    \"schema_url\": \"https://kratos.scrapnode.com/schemas/ZGVmYXVsdA\",\n    \"state\": \"active\",\n    \"state_changed_at\": \"2023-12-20T07:20:43.511500574Z\",\n    \"traits\": {\n        \"email\": \"tuan.nguyen930708@gmail.com\"\n    },\n    \"verifiable_addresses\": [\n        {\n            \"id\": \"688c6fc6-0d75-49bb-93ed-0860d1c600c0\",\n            \"value\": \"tuan.nguyen930708@gmail.com\",\n            \"verified\": false,\n            \"via\": \"email\",\n            \"status\": \"pending\",\n            \"created_at\": \"2023-12-20T07:20:43.513698Z\",\n            \"updated_at\": \"2023-12-20T07:20:43.513698Z\"\n        }\n    ],\n    \"recovery_addresses\": [\n        {\n            \"id\": \"c71a5f75-7865-47ce-93c4-28bd3248fada\",\n            \"value\": \"tuan.nguyen930708@gmail.com\",\n            \"via\": \"email\",\n            \"created_at\": \"2023-12-20T07:20:43.514484Z\",\n            \"updated_at\": \"2023-12-20T07:20:43.514484Z\"\n        }\n    ],\n    \"metadata_public\": null,\n    \"created_at\": \"2023-12-20T07:20:43.512549Z\",\n    \"updated_at\": \"2023-12-20T07:20:43.512549Z\",\n    \"organization_id\": null\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "self-service",
+			"item": [
+				{
+					"name": "registration",
+					"item": [
+						{
+							"name": "browser",
+							"item": [
+								{
+									"name": "Create Registration Flow",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/self-service/registration/browser",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"self-service",
+												"registration",
+												"browser"
+											]
+										},
+										"description": "This endpoint initiates a registration flow for API clients such as mobile devices, smart TVs, and so on.\n\nIf a valid provided session cookie or session token is provided, a 400 Bad Request error\nwill be returned unless the URL query parameter `?refresh=true` is set.\n\nTo fetch an existing registration flow call `/self-service/registration/flows?flow=<flow_id>`.\n\nYou MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server\nPages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make\nyou vulnerable to a variety of CSRF attacks.\n\nIn the case of an error, the `error.id` of the JSON response body can be one of:\n\n`session_already_available`: The user is already signed in.\n`security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.\n\nThis endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).\n\nMore information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration)."
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json",
+														"type": "text"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json",
+														"type": "text"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/self-service/registration/browser",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"self-service",
+														"registration",
+														"browser"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Date",
+													"value": "Wed, 20 Dec 2023 09:41:01 GMT"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Transfer-Encoding",
+													"value": "chunked"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "private, no-cache, no-store, must-revalidate"
+												},
+												{
+													"key": "set-cookie",
+													"value": "affinity=96de19e86d5da9d1; Path=/; HttpOnly; Secure; SameSite=None"
+												},
+												{
+													"key": "set-cookie",
+													"value": "csrf_token_6c0cb2d8e17be2aeca168648961b34f465bed2ffa37dd7fa2ad8b4867a3b1f15=ARvnkOWJ3LQJ9w/M9UIHr18ux7cCp5qLumB4/RaGT8M=; Path=/; Domain=scrapnode.com; Max-Age=31536000; HttpOnly; Secure; SameSite=Lax"
+												},
+												{
+													"key": "vary",
+													"value": "Origin"
+												},
+												{
+													"key": "vary",
+													"value": "Cookie"
+												},
+												{
+													"key": "CF-Cache-Status",
+													"value": "DYNAMIC"
+												},
+												{
+													"key": "Report-To",
+													"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=eBqyN4ijAsxZ1rrq2fq48oARrhWkgoilwbxq4b82pt%2FPW4Tzn0h3amZEm9pzJhad6Dfoqy85oGG077vVIYOeU6oQIdMDN%2Fgdf3r%2BnyJ9kFo2Oe%2FFIA6Q02TudjXqSS3%2BKncr9EbgZQ%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+												},
+												{
+													"key": "NEL",
+													"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+												},
+												{
+													"key": "Server",
+													"value": "cloudflare"
+												},
+												{
+													"key": "CF-RAY",
+													"value": "8386ed5ebba38938-SIN"
+												},
+												{
+													"key": "Content-Encoding",
+													"value": "br"
+												},
+												{
+													"key": "alt-svc",
+													"value": "h3=\":443\"; ma=86400"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"id\": \"eb2bfb29-7fe9-46ed-8785-539d990ed3ff\",\n    \"type\": \"browser\",\n    \"expires_at\": \"2023-12-20T09:51:01.895820353Z\",\n    \"issued_at\": \"2023-12-20T09:41:01.895820353Z\",\n    \"request_url\": \"https://kratos.scrapnode.com/self-service/registration/browser\",\n    \"ui\": {\n        \"action\": \"https://kratos.scrapnode.com/self-service/registration?flow=eb2bfb29-7fe9-46ed-8785-539d990ed3ff\",\n        \"method\": \"POST\",\n        \"nodes\": [\n            {\n                \"type\": \"input\",\n                \"group\": \"default\",\n                \"attributes\": {\n                    \"name\": \"csrf_token\",\n                    \"type\": \"hidden\",\n                    \"value\": \"tmqMMK+4Ii9vIBzA9Xr5DzajAIaIXoyGKecGRbVQDde3cWugSjH+m2bXEwwAOP6gaY3HMYr5Fg2Th364o9ZCFA==\",\n                    \"required\": true,\n                    \"disabled\": false,\n                    \"node_type\": \"input\"\n                },\n                \"messages\": [],\n                \"meta\": {}\n            },\n            {\n                \"type\": \"input\",\n                \"group\": \"password\",\n                \"attributes\": {\n                    \"name\": \"traits.email\",\n                    \"type\": \"email\",\n                    \"required\": true,\n                    \"autocomplete\": \"email\",\n                    \"disabled\": false,\n                    \"node_type\": \"input\"\n                },\n                \"messages\": [],\n                \"meta\": {\n                    \"label\": {\n                        \"id\": 1070002,\n                        \"text\": \"E-Mail\",\n                        \"type\": \"info\",\n                        \"context\": {\n                            \"title\": \"E-Mail\"\n                        }\n                    }\n                }\n            },\n            {\n                \"type\": \"input\",\n                \"group\": \"password\",\n                \"attributes\": {\n                    \"name\": \"password\",\n                    \"type\": \"password\",\n                    \"required\": true,\n                    \"autocomplete\": \"new-password\",\n                    \"disabled\": false,\n                    \"node_type\": \"input\"\n                },\n                \"messages\": [],\n                \"meta\": {\n                    \"label\": {\n                        \"id\": 1070001,\n                        \"text\": \"Password\",\n                        \"type\": \"info\"\n                    }\n                }\n            },\n            {\n                \"type\": \"input\",\n                \"group\": \"password\",\n                \"attributes\": {\n                    \"name\": \"method\",\n                    \"type\": \"submit\",\n                    \"value\": \"password\",\n                    \"disabled\": false,\n                    \"node_type\": \"input\"\n                },\n                \"messages\": [],\n                \"meta\": {\n                    \"label\": {\n                        \"id\": 1040001,\n                        \"text\": \"Sign up\",\n                        \"type\": \"info\"\n                    }\n                }\n            }\n        ]\n    },\n    \"organization_id\": null,\n    \"state\": \"choose_method\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Submit a Registration Flow",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "traits.email",
+											"value": "tuan.nguyen930708@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "changemenow",
+											"description": "(Required) Password to sign the user up with"
+										},
+										{
+											"key": "method",
+											"value": "password",
+											"description": "(Required) Method to use\n\nThis field must be set to `password` when using the password method."
+										},
+										{
+											"key": "csrf_token",
+											"value": "BXnmV8BEsbAEVr0V3PI2lohpLkVFeQbGBuw7RGodgjml//feeJ77DcXE9du4t6e3CGBOEVa1m7qFU+i7ZfH9Fw==",
+											"description": "The CSRF Token"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/self-service/registration?flow=a934c4fc-9355-48c4-90ef-8f3c4c00a158",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"self-service",
+										"registration"
+									],
+									"query": [
+										{
+											"key": "flow",
+											"value": "a934c4fc-9355-48c4-90ef-8f3c4c00a158"
+										}
+									]
+								},
+								"description": "Use this endpoint to complete a registration flow by sending an identity's traits and password. This endpoint\nbehaves differently for API and browser flows.\n\nAPI flows expect `application/json` to be sent in the body and respond with\nHTTP 200 and a application/json body with the created identity success - if the session hook is configured the\n`session` and `session_token` will also be included;\nHTTP 410 if the original flow expired with the appropriate error messages set and optionally a `use_flow_id` parameter in the body;\nHTTP 400 on form validation errors.\n\nBrowser flows expect a Content-Type of `application/x-www-form-urlencoded` or `application/json` to be sent in the body and respond with\na HTTP 303 redirect to the post/after registration URL or the `return_to` value if it was set and if the registration succeeded;\na HTTP 303 redirect to the registration UI URL with the flow ID containing the validation errors otherwise.\n\nBrowser flows with an accept header of `application/json` will not redirect but instead respond with\nHTTP 200 and a application/json body with the signed in identity and a `Set-Cookie` header on success;\nHTTP 303 redirect to a fresh login flow if the original flow expired with the appropriate error messages set;\nHTTP 400 on form validation errors.\n\nIf this endpoint is called with `Accept: application/json` in the header, the response contains the flow without a redirect. In the\ncase of an error, the `error.id` of the JSON response body can be one of:\n\n`session_already_available`: The user is already signed in.\n`security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.\n`security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!\n`browser_location_change_required`: Usually sent when an AJAX request indicates that the browser needs to open a specific URL.\nMost likely used in Social Sign In flows.\n\nMore information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration)."
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/x-www-form-urlencoded"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "traits.email",
+													"value": "gyh55799@nezid.com",
+													"type": "text"
+												},
+												{
+													"key": "password",
+													"value": "1password",
+													"description": "(Required) Password to sign the user up with"
+												},
+												{
+													"key": "method",
+													"value": "password",
+													"description": "(Required) Method to use\n\nThis field must be set to `password` when using the password method."
+												},
+												{
+													"key": "csrf_token",
+													"value": "tmqMMK+4Ii9vIBzA9Xr5DzajAIaIXoyGKecGRbVQDde3cWugSjH+m2bXEwwAOP6gaY3HMYr5Fg2Th364o9ZCFA==",
+													"description": "The CSRF Token"
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/self-service/registration?flow=eb2bfb29-7fe9-46ed-8785-539d990ed3ff",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"self-service",
+												"registration"
+											],
+											"query": [
+												{
+													"key": "flow",
+													"value": "eb2bfb29-7fe9-46ed-8785-539d990ed3ff"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Wed, 20 Dec 2023 09:42:28 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "set-cookie",
+											"value": "csrf_token_6c0cb2d8e17be2aeca168648961b34f465bed2ffa37dd7fa2ad8b4867a3b1f15=2rZbiLjhNcHUB9TfVdWIHhfnIr37GPaCqCceyxGNBXo=; Path=/; Domain=scrapnode.com; Max-Age=31536000; HttpOnly; Secure; SameSite=Lax"
+										},
+										{
+											"key": "set-cookie",
+											"value": "ory_kratos_session=MTcwMzA2NTM0OHxGSXMzTTBxUzFiNkVHbkU5M3VZY2RvQVhWN0tQZnVhV291QWEtTGtQYmVzaWNvOTE0VDNmUUk1Yzl2TVl5NGFLanZYYy1HSGRyTmJMLWRqdGpSLVpWR0lTaGhLZ0F4S0dnNzE1OHhLaG03ZVFlOXlLa25qSXNyNEVrcmpRczc0MDA2Z1JCVi1hVkNXczVKVWFvWFptcDdKUElvdG1VQmlmaTlPTHdmdm9OZGZKS295VHIyZDFfcTVxNUtCNEpkSXMwUjZKaFd4QV9UcURmWjk3R2t1cGxTc2F1aGUzNDkwXzJ6NUw4dVBzNWl5cHRJa2h2X3AyVHgtN2owTXJqRGN2bktsYTU1U1VjRnFZam93azdMR3N8uiSW7UHTwl_KR0jaRyEm_sUi5YKKiDh5TxZR11YchJ0=; Path=/; Domain=scrapnode.com; Expires=Thu, 21 Dec 2023 09:42:27 GMT; Max-Age=86399; HttpOnly; Secure; SameSite=Lax"
+										},
+										{
+											"key": "vary",
+											"value": "Origin"
+										},
+										{
+											"key": "vary",
+											"value": "Cookie"
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=oEa9kfgTEeIrAG27klfl%2B6yJOnwjTApgLdgOAp5R%2B4MDFDIruYZ2MvEuYczdmM%2Fy%2B78C2eo5vBTWa3wCr4%2FHyJizcyo7gcPDzTxyHq9eGJa%2BCaKtw%2Floco2NPxSeFpF84eI0Srj1Qg%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "NEL",
+											"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "8386ef7c8a178938-SIN"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "br"
+										},
+										{
+											"key": "alt-svc",
+											"value": "h3=\":443\"; ma=86400"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"session\": {\n        \"id\": \"9db7bc79-66ab-4bfe-98e0-9f55cf761318\",\n        \"active\": true,\n        \"expires_at\": \"2023-12-21T09:42:28.836782153Z\",\n        \"authenticated_at\": \"2023-12-20T09:42:28.836788985Z\",\n        \"authenticator_assurance_level\": \"aal1\",\n        \"authentication_methods\": [\n            {\n                \"method\": \"password\",\n                \"aal\": \"aal1\",\n                \"completed_at\": \"2023-12-20T09:42:28.83678172Z\"\n            }\n        ],\n        \"issued_at\": \"2023-12-20T09:42:28.836782153Z\",\n        \"identity\": {\n            \"id\": \"d95ad291-d27b-4eaa-89bb-4c151c757ae6\",\n            \"schema_id\": \"default\",\n            \"schema_url\": \"https://kratos.scrapnode.com/schemas/ZGVmYXVsdA\",\n            \"state\": \"active\",\n            \"state_changed_at\": \"2023-12-20T09:42:28.832395601Z\",\n            \"traits\": {\n                \"email\": \"gyh55799@nezid.com\"\n            },\n            \"verifiable_addresses\": [\n                {\n                    \"id\": \"d25a17e9-c624-46be-a0c1-5002b3495c8a\",\n                    \"value\": \"gyh55799@nezid.com\",\n                    \"verified\": false,\n                    \"via\": \"email\",\n                    \"status\": \"sent\",\n                    \"created_at\": \"2023-12-20T09:42:28.834034Z\",\n                    \"updated_at\": \"2023-12-20T09:42:28.834034Z\"\n                }\n            ],\n            \"recovery_addresses\": [\n                {\n                    \"id\": \"f45a9abe-9ef3-4761-8936-128e7e3616dc\",\n                    \"value\": \"gyh55799@nezid.com\",\n                    \"via\": \"email\",\n                    \"created_at\": \"2023-12-20T09:42:28.834411Z\",\n                    \"updated_at\": \"2023-12-20T09:42:28.834411Z\"\n                }\n            ],\n            \"metadata_public\": null,\n            \"created_at\": \"2023-12-20T09:42:28.833549Z\",\n            \"updated_at\": \"2023-12-20T09:42:28.833549Z\",\n            \"organization_id\": null\n        },\n        \"devices\": [\n            {\n                \"id\": \"0bcffed3-2f65-49d5-87ee-5b401cdfa4a3\",\n                \"ip_address\": \"10.42.0.1\",\n                \"user_agent\": \"PostmanRuntime/7.36.0\",\n                \"location\": \"VN\"\n            }\n        ]\n    },\n    \"identity\": {\n        \"id\": \"d95ad291-d27b-4eaa-89bb-4c151c757ae6\",\n        \"schema_id\": \"default\",\n        \"schema_url\": \"https://kratos.scrapnode.com/schemas/ZGVmYXVsdA\",\n        \"state\": \"active\",\n        \"state_changed_at\": \"2023-12-20T09:42:28.832395601Z\",\n        \"traits\": {\n            \"email\": \"gyh55799@nezid.com\"\n        },\n        \"verifiable_addresses\": [\n            {\n                \"id\": \"d25a17e9-c624-46be-a0c1-5002b3495c8a\",\n                \"value\": \"gyh55799@nezid.com\",\n                \"verified\": false,\n                \"via\": \"email\",\n                \"status\": \"sent\",\n                \"created_at\": \"2023-12-20T09:42:28.834034Z\",\n                \"updated_at\": \"2023-12-20T09:42:28.834034Z\"\n            }\n        ],\n        \"recovery_addresses\": [\n            {\n                \"id\": \"f45a9abe-9ef3-4761-8936-128e7e3616dc\",\n                \"value\": \"gyh55799@nezid.com\",\n                \"via\": \"email\",\n                \"created_at\": \"2023-12-20T09:42:28.834411Z\",\n                \"updated_at\": \"2023-12-20T09:42:28.834411Z\"\n            }\n        ],\n        \"metadata_public\": null,\n        \"created_at\": \"2023-12-20T09:42:28.833549Z\",\n        \"updated_at\": \"2023-12-20T09:42:28.833549Z\",\n        \"organization_id\": null\n    },\n    \"continue_with\": [\n        {\n            \"action\": \"show_verification_ui\",\n            \"flow\": {\n                \"id\": \"f1b62e42-e311-4222-95cf-bd1f63580cfd\",\n                \"verifiable_address\": \"gyh55799@nezid.com\",\n                \"url\": \"https://auth.scrapnode.com/verification?flow=f1b62e42-e311-4222-95cf-bd1f63580cfd\"\n            }\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "login",
+					"item": [
+						{
+							"name": "browser",
+							"item": [
+								{
+									"name": "Create Login Flow",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"description": "The Session Token of the Identity performing the settings flow.",
+												"key": "X-Session-Token",
+												"value": "<string>"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/self-service/login/browser?refresh=true",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"self-service",
+												"login",
+												"browser"
+											],
+											"query": [
+												{
+													"key": "refresh",
+													"value": "true",
+													"description": "Refresh a login session\n\nIf set to true, this will refresh an existing login session by\nasking the user to sign in again. This will reset the\nauthenticated_at time of the session."
+												}
+											]
+										},
+										"description": "This endpoint initiates a login flow for native apps that do not use a browser, such as mobile devices, smart TVs, and so on.\n\nIf a valid provided session cookie or session token is provided, a 400 Bad Request error\nwill be returned unless the URL query parameter `?refresh=true` is set.\n\nTo fetch an existing login flow call `/self-service/login/flows?flow=<flow_id>`.\n\nYou MUST NOT use this endpoint in client-side (Single Page Apps, ReactJS, AngularJS) nor server-side (Java Server\nPages, NodeJS, PHP, Golang, ...) browser applications. Using this endpoint in these applications will make\nyou vulnerable to a variety of CSRF attacks, including CSRF login attacks.\n\nIn the case of an error, the `error.id` of the JSON response body can be one of:\n\n`session_already_available`: The user is already signed in.\n`session_aal1_required`: Multi-factor auth (e.g. 2fa) was requested but the user has no session yet.\n`security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.\n\nThis endpoint MUST ONLY be used in scenarios such as native mobile apps (React Native, Objective C, Swift, Java, ...).\n\nMore information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration)."
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"description": "The Session Token of the Identity performing the settings flow.",
+														"key": "X-Session-Token",
+														"value": "<string>"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/self-service/login/browser?refresh=true",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"self-service",
+														"login",
+														"browser"
+													],
+													"query": [
+														{
+															"key": "refresh",
+															"value": "true",
+															"description": "Refresh a login session\n\nIf set to true, this will refresh an existing login session by\nasking the user to sign in again. This will reset the\nauthenticated_at time of the session."
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Date",
+													"value": "Wed, 20 Dec 2023 13:11:15 GMT"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Transfer-Encoding",
+													"value": "chunked"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "private, no-cache, no-store, must-revalidate"
+												},
+												{
+													"key": "set-cookie",
+													"value": "affinity=7abe7c1eeee0ffaa; Path=/; HttpOnly; Secure; SameSite=None"
+												},
+												{
+													"key": "set-cookie",
+													"value": "csrf_token_6c0cb2d8e17be2aeca168648961b34f465bed2ffa37dd7fa2ad8b4867a3b1f15=8qGKSOwSl4Dah2f5b/oEi99F2CXwok7/nsoTj6FAUS4=; Path=/; Domain=scrapnode.com; Max-Age=31536000; HttpOnly; Secure; SameSite=Lax"
+												},
+												{
+													"key": "vary",
+													"value": "Origin"
+												},
+												{
+													"key": "vary",
+													"value": "Cookie"
+												},
+												{
+													"key": "CF-Cache-Status",
+													"value": "DYNAMIC"
+												},
+												{
+													"key": "Report-To",
+													"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=XPePoF11zd6xJqonqmqPLQMAR40JWGVaBzcie1emmp%2FmrW%2BAW2Jm68cG%2FHuc%2BjeD%2F8SpGY%2BFSkThWnLweh8569gx87izzz3JGXplGl%2FPSnhXwu%2B6NLTlDX9pOV2OqISKDjG1N%2FjAaw%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+												},
+												{
+													"key": "NEL",
+													"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+												},
+												{
+													"key": "Server",
+													"value": "cloudflare"
+												},
+												{
+													"key": "CF-RAY",
+													"value": "83882153dad29e40-SIN"
+												},
+												{
+													"key": "Content-Encoding",
+													"value": "br"
+												},
+												{
+													"key": "alt-svc",
+													"value": "h3=\":443\"; ma=86400"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"id\": \"04d459df-5c63-44eb-830a-665eeeaed215\",\n    \"organization_id\": null,\n    \"type\": \"browser\",\n    \"expires_at\": \"2023-12-20T13:21:15.823403688Z\",\n    \"issued_at\": \"2023-12-20T13:11:15.823403688Z\",\n    \"request_url\": \"https://kratos.scrapnode.com/self-service/login/browser?refresh=true\",\n    \"ui\": {\n        \"action\": \"https://kratos.scrapnode.com/self-service/login?flow=04d459df-5c63-44eb-830a-665eeeaed215\",\n        \"method\": \"POST\",\n        \"nodes\": [\n            {\n                \"type\": \"input\",\n                \"group\": \"default\",\n                \"attributes\": {\n                    \"name\": \"csrf_token\",\n                    \"type\": \"hidden\",\n                    \"value\": \"I2PGDhh/vNT/9W0wunEMViu8dYDvgSJvlCqWvQHxAafRwkxG9G0rVCVyCsnViwjd9PmtpR8jbJAK4IUyoLFQiQ==\",\n                    \"required\": true,\n                    \"disabled\": false,\n                    \"node_type\": \"input\"\n                },\n                \"messages\": [],\n                \"meta\": {}\n            },\n            {\n                \"type\": \"input\",\n                \"group\": \"default\",\n                \"attributes\": {\n                    \"name\": \"identifier\",\n                    \"type\": \"text\",\n                    \"value\": \"\",\n                    \"required\": true,\n                    \"disabled\": false,\n                    \"node_type\": \"input\"\n                },\n                \"messages\": [],\n                \"meta\": {\n                    \"label\": {\n                        \"id\": 1070002,\n                        \"text\": \"E-Mail\",\n                        \"type\": \"info\",\n                        \"context\": {\n                            \"title\": \"E-Mail\"\n                        }\n                    }\n                }\n            },\n            {\n                \"type\": \"input\",\n                \"group\": \"password\",\n                \"attributes\": {\n                    \"name\": \"password\",\n                    \"type\": \"password\",\n                    \"required\": true,\n                    \"autocomplete\": \"current-password\",\n                    \"disabled\": false,\n                    \"node_type\": \"input\"\n                },\n                \"messages\": [],\n                \"meta\": {\n                    \"label\": {\n                        \"id\": 1070001,\n                        \"text\": \"Password\",\n                        \"type\": \"info\"\n                    }\n                }\n            },\n            {\n                \"type\": \"input\",\n                \"group\": \"password\",\n                \"attributes\": {\n                    \"name\": \"method\",\n                    \"type\": \"submit\",\n                    \"value\": \"password\",\n                    \"disabled\": false,\n                    \"node_type\": \"input\"\n                },\n                \"messages\": [],\n                \"meta\": {\n                    \"label\": {\n                        \"id\": 1010001,\n                        \"text\": \"Sign in\",\n                        \"type\": \"info\"\n                    }\n                }\n            }\n        ]\n    },\n    \"created_at\": \"2023-12-20T13:11:15.825857Z\",\n    \"updated_at\": \"2023-12-20T13:11:15.825857Z\",\n    \"refresh\": false,\n    \"requested_aal\": \"aal1\",\n    \"state\": \"choose_method\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Submit a Login Flow",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "method",
+											"value": "password",
+											"description": "(Required) Method should be set to \"password\" when logging in using the identifier and password strategy."
+										},
+										{
+											"key": "password",
+											"value": "anotherpassword",
+											"description": "(Required) The user's password."
+										},
+										{
+											"key": "identifier",
+											"value": "gyh55799@nezid.com",
+											"description": "(Required) Identifier is the email or username of the user trying to log in."
+										},
+										{
+											"key": "csrf_token",
+											"value": "mQZg7ibuEx/izMybtZsJBxVFAW2nxjLiHMPjccPNdqeYGjRG0ZQjLfQ30ZKJ9qWMDp37fLJuG99eocS8AZRWRg==",
+											"description": "Sending the anti-csrf token is only required for browser login flows."
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/self-service/login?flow=073779db-efd9-4164-bb4d-1d75d76c3c54",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"self-service",
+										"login"
+									],
+									"query": [
+										{
+											"key": "flow",
+											"value": "073779db-efd9-4164-bb4d-1d75d76c3c54",
+											"description": "(Required) The Login Flow ID\n\nThe value for this parameter comes from `flow` URL Query parameter sent to your\napplication (e.g. `/login?flow=abcde`)."
+										}
+									]
+								},
+								"description": ":::info\n\nThis endpoint is EXPERIMENTAL and subject to potential breaking changes in the future.\n\n:::\n\nUse this endpoint to complete a login flow. This endpoint\nbehaves differently for API and browser flows.\n\nAPI flows expect `application/json` to be sent in the body and responds with\nHTTP 200 and a application/json body with the session token on success;\nHTTP 410 if the original flow expired with the appropriate error messages set and optionally a `use_flow_id` parameter in the body;\nHTTP 400 on form validation errors.\n\nBrowser flows expect a Content-Type of `application/x-www-form-urlencoded` or `application/json` to be sent in the body and respond with\na HTTP 303 redirect to the post/after login URL or the `return_to` value if it was set and if the login succeeded;\na HTTP 303 redirect to the login UI URL with the flow ID containing the validation errors otherwise.\n\nBrowser flows with an accept header of `application/json` will not redirect but instead respond with\nHTTP 200 and a application/json body with the signed in identity and a `Set-Cookie` header on success;\nHTTP 303 redirect to a fresh login flow if the original flow expired with the appropriate error messages set;\nHTTP 400 on form validation errors.\n\nIf this endpoint is called with `Accept: application/json` in the header, the response contains the flow without a redirect. In the\ncase of an error, the `error.id` of the JSON response body can be one of:\n\n`session_already_available`: The user is already signed in.\n`security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.\n`security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!\n`browser_location_change_required`: Usually sent when an AJAX request indicates that the browser needs to open a specific URL.\nMost likely used in Social Sign In flows.\n\nMore information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration)."
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/x-www-form-urlencoded"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "method",
+													"value": "password",
+													"description": "(Required) Method should be set to \"password\" when logging in using the identifier and password strategy."
+												},
+												{
+													"key": "password",
+													"value": "1password",
+													"description": "(Required) The user's password."
+												},
+												{
+													"key": "identifier",
+													"value": "gyh55799@nezid.com",
+													"description": "(Required) Identifier is the email or username of the user trying to log in."
+												},
+												{
+													"key": "csrf_token",
+													"value": "I2PGDhh/vNT/9W0wunEMViu8dYDvgSJvlCqWvQHxAafRwkxG9G0rVCVyCsnViwjd9PmtpR8jbJAK4IUyoLFQiQ==",
+													"description": "Sending the anti-csrf token is only required for browser login flows."
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/self-service/login?flow=04d459df-5c63-44eb-830a-665eeeaed215",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"self-service",
+												"login"
+											],
+											"query": [
+												{
+													"key": "flow",
+													"value": "04d459df-5c63-44eb-830a-665eeeaed215",
+													"description": "(Required) The Login Flow ID\n\nThe value for this parameter comes from `flow` URL Query parameter sent to your\napplication (e.g. `/login?flow=abcde`)."
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Wed, 20 Dec 2023 13:13:35 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "set-cookie",
+											"value": "csrf_token_6c0cb2d8e17be2aeca168648961b34f465bed2ffa37dd7fa2ad8b4867a3b1f15=5GkVMgKWRLEDRqvQuNv+FwRCk89UozeJ2OG454/ZSIE=; Path=/; Domain=scrapnode.com; Max-Age=31536000; HttpOnly; Secure; SameSite=Lax"
+										},
+										{
+											"key": "set-cookie",
+											"value": "ory_kratos_session=MTcwMzA3ODAxNXx2QU1sR1ZzNWJhX1gtXzJZa1Vtck9NbVVxWklVOWJZRS14SXpBVWVWY3lsRFJFZzRzV0pUaW9RY3VoVndjSW14c0gyOGxHRjNFd29kS3Q2S2RaTGZxQmltYjhWbFdKVXJBaFpZRkZacTc0cHJOWlBjVFR1ellxV2JZWWtjQXhrVEZZODUxeExFTGM3VjNuSV9LUHZUSFVzc0d2cHZrclZYWGxEN1lmQUR0QWRhT3ItOVhXc1piYThmX1J0enhnSThNYWRXT2dIUmcwS3VHcW40THplTTZmV2dSaUtTc29nREg3QzF2dE8yWFNwSWU1dW1KVnlCbnBnc1FFUGt2eXVkNjRJY2lKNEQtRXBLSzJpSkRLV0l8qVcR1CNST0wrxpVBsAjSqxXy9kN0qgPq0J5YlylwhdY=; Path=/; Domain=scrapnode.com; Expires=Thu, 21 Dec 2023 13:13:34 GMT; Max-Age=86399; HttpOnly; Secure; SameSite=Lax"
+										},
+										{
+											"key": "vary",
+											"value": "Origin"
+										},
+										{
+											"key": "vary",
+											"value": "Cookie"
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=LNKrb0dx1mW0z59jD%2BR5vjNOtoR%2B%2F4KeyNcI0G%2Fjd39G3bIf8alr%2Ff3oPBfs5RUCTvGEOLizQkHshzVswJfrX7I26XjxvF3Kyg8OS9gK%2B2SiepeY1KgfPzfvEKkApN78OSdfnzs9%2BQ%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "NEL",
+											"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "838824ba79a19e40-SIN"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "br"
+										},
+										{
+											"key": "alt-svc",
+											"value": "h3=\":443\"; ma=86400"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"session\": {\n        \"id\": \"468ca40c-ae5b-4037-8914-f65597626c3d\",\n        \"active\": true,\n        \"expires_at\": \"2023-12-21T13:13:35.413927139Z\",\n        \"authenticated_at\": \"2023-12-20T13:13:35.413927139Z\",\n        \"authenticator_assurance_level\": \"aal1\",\n        \"authentication_methods\": [\n            {\n                \"method\": \"password\",\n                \"aal\": \"aal1\",\n                \"completed_at\": \"2023-12-20T13:13:35.413921865Z\"\n            }\n        ],\n        \"issued_at\": \"2023-12-20T13:13:35.413927139Z\",\n        \"identity\": {\n            \"id\": \"d95ad291-d27b-4eaa-89bb-4c151c757ae6\",\n            \"schema_id\": \"default\",\n            \"schema_url\": \"https://kratos.scrapnode.com/schemas/ZGVmYXVsdA\",\n            \"state\": \"active\",\n            \"state_changed_at\": \"2023-12-20T09:42:28.832395Z\",\n            \"traits\": {\n                \"email\": \"gyh55799@nezid.com\"\n            },\n            \"verifiable_addresses\": [\n                {\n                    \"id\": \"d25a17e9-c624-46be-a0c1-5002b3495c8a\",\n                    \"value\": \"gyh55799@nezid.com\",\n                    \"verified\": true,\n                    \"via\": \"email\",\n                    \"status\": \"completed\",\n                    \"verified_at\": \"2023-12-20T09:46:06.984885Z\",\n                    \"created_at\": \"2023-12-20T09:42:28.834034Z\",\n                    \"updated_at\": \"2023-12-20T09:42:28.834034Z\"\n                }\n            ],\n            \"recovery_addresses\": [\n                {\n                    \"id\": \"f45a9abe-9ef3-4761-8936-128e7e3616dc\",\n                    \"value\": \"gyh55799@nezid.com\",\n                    \"via\": \"email\",\n                    \"created_at\": \"2023-12-20T09:42:28.834411Z\",\n                    \"updated_at\": \"2023-12-20T09:42:28.834411Z\"\n                }\n            ],\n            \"metadata_public\": null,\n            \"created_at\": \"2023-12-20T09:42:28.833549Z\",\n            \"updated_at\": \"2023-12-20T09:42:28.833549Z\",\n            \"organization_id\": null\n        },\n        \"devices\": [\n            {\n                \"id\": \"0ea9cb85-b617-4dc3-b244-920e3df23522\",\n                \"ip_address\": \"10.42.0.1\",\n                \"user_agent\": \"PostmanRuntime/7.36.0\",\n                \"location\": \"VN\"\n            }\n        ]\n    }\n}"
+								},
+								{
+									"name": "Success with code",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/x-www-form-urlencoded"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "method",
+													"value": "code",
+													"description": "(Required) Method should be set to \"password\" when logging in using the identifier and password strategy."
+												},
+												{
+													"key": "code",
+													"value": "018510",
+													"description": "(Required) The user's password."
+												},
+												{
+													"key": "identifier",
+													"value": "jannymita9493@gmail.com",
+													"description": "(Required) Identifier is the email or username of the user trying to log in."
+												},
+												{
+													"key": "csrf_token",
+													"value": "sbh5XZ9mZVL5XFfc6+G2cioNnoihwSv42nXFOH+XtTVV0WxvnfAh4/oa/AxTOkhlLk8NR/ViHHEClH3f8E79tA==",
+													"description": "Sending the anti-csrf token is only required for browser login flows."
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/self-service/login?flow=7c2e0842-aeb2-4804-ba45-4f7344245c40",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"self-service",
+												"login"
+											],
+											"query": [
+												{
+													"key": "flow",
+													"value": "7c2e0842-aeb2-4804-ba45-4f7344245c40",
+													"description": "(Required) The Login Flow ID\n\nThe value for this parameter comes from `flow` URL Query parameter sent to your\napplication (e.g. `/login?flow=abcde`)."
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 26 Dec 2023 09:20:03 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "set-cookie",
+											"value": "csrf_token_6c0cb2d8e17be2aeca168648961b34f465bed2ffa37dd7fa2ad8b4867a3b1f15=4DhZBRlTTELvp5xnFy6y+k3GPEJnUuUJ0qR639izwAo=; Path=/; Domain=scrapnode.com; Max-Age=31536000; HttpOnly; Secure; SameSite=Lax"
+										},
+										{
+											"key": "set-cookie",
+											"value": "ory_kratos_session=MTcwMzU4MjQwM3xkV01FV2EybndHU2NIOTZfZXVmZHRYeFVoZU1kWjVTbklJOWxTbWtLQkNYdXE5NEhNekVVVWE0NTBvRHZiQlY5ZkRfTXVFTnFETmtQVlhjMjlFRkQ4a0R6ZUw3WjlMOVZuWUxIOGVGWlkydXRzeV8xRnNSUWI2MW90TjhGT1hDN3J2TU5EWXpncEtMSGZZaThXM04xdFBiZndiX25YUUNoalF3d2FTX1kzR0pIbE1pNkE0NnNVekJyaGpGR19VT3RMbmItR0o1eDh2MTBHM3R0T0dCV0twQzc4bGVSUkVkZ1lYX2tHcE03NV8xYmVqekQ3TnU0T2t4TTdHcUpscVRMeklCbG5GaVdnWE1BdHo3WG5rUWh8iZZwHzWpj5zCxBQvN4k3eD0ChXMbKcycHB6Fo5uFAEw=; Path=/; Domain=scrapnode.com; Expires=Wed, 27 Dec 2023 09:20:02 GMT; Max-Age=86399; HttpOnly; Secure; SameSite=Lax"
+										},
+										{
+											"key": "vary",
+											"value": "Origin"
+										},
+										{
+											"key": "vary",
+											"value": "Cookie"
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=S%2BfiFbZx7XHDwt9ufMXWr2xnF%2B7MCt%2BBhsM%2Bn9wkkNof9fhhpRI6UU%2FJ8AE5EZEHQ6uJpeC%2BL89YvkK%2FRJhSEZjgLYmoUbYmfkNURbAv0aJLKZENbatt58Rm5R0bfoEARUL79dBYIw%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "NEL",
+											"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "83b83ee8bd634c59-SIN"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "br"
+										},
+										{
+											"key": "alt-svc",
+											"value": "h3=\":443\"; ma=86400"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"session\": {\n        \"id\": \"e439e4d4-65fa-4310-bd3c-b9907ca8ed8a\",\n        \"active\": true,\n        \"expires_at\": \"2023-12-27T09:20:03.978709838Z\",\n        \"authenticated_at\": \"2023-12-26T09:20:03.978709838Z\",\n        \"authenticator_assurance_level\": \"aal1\",\n        \"authentication_methods\": [\n            {\n                \"method\": \"code\",\n                \"aal\": \"aal1\",\n                \"completed_at\": \"2023-12-26T09:20:03.978706262Z\"\n            }\n        ],\n        \"issued_at\": \"2023-12-26T09:20:03.978709838Z\",\n        \"identity\": {\n            \"id\": \"a7b19cd8-3dcf-484a-9333-a4a3220732bc\",\n            \"schema_id\": \"default\",\n            \"schema_url\": \"https://kratos.scrapnode.com/schemas/ZGVmYXVsdA\",\n            \"state\": \"active\",\n            \"state_changed_at\": \"2023-12-20T14:45:46.371496Z\",\n            \"traits\": {\n                \"email\": \"jannymita9493@gmail.com\"\n            },\n            \"verifiable_addresses\": [\n                {\n                    \"id\": \"e5ed20d3-da08-4aa6-838e-7482d76683aa\",\n                    \"value\": \"jannymita9493@gmail.com\",\n                    \"verified\": true,\n                    \"via\": \"email\",\n                    \"status\": \"completed\",\n                    \"verified_at\": \"2023-12-20T14:46:00.332195Z\",\n                    \"created_at\": \"2023-12-20T14:45:46.373344Z\",\n                    \"updated_at\": \"2023-12-20T14:45:46.373344Z\"\n                }\n            ],\n            \"recovery_addresses\": [\n                {\n                    \"id\": \"f431a37e-8c11-4d9b-a040-0cbfe5f8c6c7\",\n                    \"value\": \"jannymita9493@gmail.com\",\n                    \"via\": \"email\",\n                    \"created_at\": \"2023-12-20T14:45:46.374095Z\",\n                    \"updated_at\": \"2023-12-20T14:45:46.374095Z\"\n                }\n            ],\n            \"metadata_public\": null,\n            \"created_at\": \"2023-12-20T14:45:46.372497Z\",\n            \"updated_at\": \"2023-12-20T14:45:46.372497Z\",\n            \"organization_id\": null\n        },\n        \"devices\": [\n            {\n                \"id\": \"edb763f5-2f70-4da3-b8f9-8d1648aa87e5\",\n                \"ip_address\": \"10.42.0.1\",\n                \"user_agent\": \"PostmanRuntime/7.36.0\",\n                \"location\": \"VN\"\n            }\n        ]\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "logout",
+					"item": [
+						{
+							"name": "browser",
+							"item": [
+								{
+									"name": "Create a Logout URL for Browsers",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/self-service/logout/browser",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"self-service",
+												"logout",
+												"browser"
+											]
+										},
+										"description": "This endpoint initializes a browser-based user logout flow and a URL which can be used to log out the user.\n\nThis endpoint is NOT INTENDED for API clients and only works\nwith browsers (Chrome, Firefox, ...). For API clients you can\ncall the `/self-service/logout/api` URL directly with the Ory Session Token.\n\nThe URL is only valid for the currently signed in user. If no user is signed in, this endpoint returns\na 401 error.\n\nWhen calling this endpoint from a backend, please ensure to properly forward the HTTP cookies."
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "verification",
+					"item": [
+						{
+							"name": "flows",
+							"item": [
+								{
+									"name": "Get Verification Flow",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/self-service/verification/flows?id=f1b62e42-e311-4222-95cf-bd1f63580cfd",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"self-service",
+												"verification",
+												"flows"
+											],
+											"query": [
+												{
+													"key": "id",
+													"value": "f1b62e42-e311-4222-95cf-bd1f63580cfd",
+													"description": "(Required) The Flow ID\n\nThe value for this parameter comes from `request` URL Query parameter sent to your\napplication (e.g. `/verification?flow=abcde`)."
+												}
+											]
+										},
+										"description": "This endpoint returns a verification flow's context with, for example, error details and other information.\n\nBrowser flows expect the anti-CSRF cookie to be included in the request's HTTP Cookie Header.\nFor AJAX requests you must ensure that cookies are included in the request or requests will fail.\n\nIf you use the browser-flow for server-side apps, the services need to run on a common top-level-domain\nand you need to forward the incoming HTTP Cookie header to this endpoint:\n\n```js\npseudo-code example\nrouter.get('/recovery', async function (req, res) {\nconst flow = await client.getVerificationFlow(req.header('cookie'), req.query['flow'])\n\nres.render('verification', flow)\n})\n```\n\nMore information can be found at [Ory Kratos Email and Phone Verification Documentation](https://www.ory.sh/docs/kratos/self-service/flows/verify-email-account-activation)."
+									},
+									"response": [
+										{
+											"name": "Success",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/self-service/verification/flows?id=f1b62e42-e311-4222-95cf-bd1f63580cfd",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"self-service",
+														"verification",
+														"flows"
+													],
+													"query": [
+														{
+															"key": "id",
+															"value": "f1b62e42-e311-4222-95cf-bd1f63580cfd",
+															"description": "(Required) The Flow ID\n\nThe value for this parameter comes from `request` URL Query parameter sent to your\napplication (e.g. `/verification?flow=abcde`)."
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Date",
+													"value": "Wed, 20 Dec 2023 09:44:09 GMT"
+												},
+												{
+													"key": "Content-Type",
+													"value": "application/json; charset=utf-8"
+												},
+												{
+													"key": "Transfer-Encoding",
+													"value": "chunked"
+												},
+												{
+													"key": "Connection",
+													"value": "keep-alive"
+												},
+												{
+													"key": "Cache-Control",
+													"value": "private, no-cache, no-store, must-revalidate"
+												},
+												{
+													"key": "vary",
+													"value": "Origin"
+												},
+												{
+													"key": "vary",
+													"value": "Cookie"
+												},
+												{
+													"key": "CF-Cache-Status",
+													"value": "DYNAMIC"
+												},
+												{
+													"key": "Report-To",
+													"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=IswxLjjUVqb2cLCQhjKiL15pTf77HiTP49DpaY2T3ld3weM%2BeR%2FMqvqeuaHe9cwVE%2FN73JmdOzcLY8onPMJ6X2v0hlX1O%2BkgPasDcECQduF%2FyoSePqyHu12JShT%2FmgHwKKwbQCF3ww%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+												},
+												{
+													"key": "NEL",
+													"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+												},
+												{
+													"key": "Server",
+													"value": "cloudflare"
+												},
+												{
+													"key": "CF-RAY",
+													"value": "8386f1f28ef18938-SIN"
+												},
+												{
+													"key": "Content-Encoding",
+													"value": "br"
+												},
+												{
+													"key": "alt-svc",
+													"value": "h3=\":443\"; ma=86400"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"id\": \"f1b62e42-e311-4222-95cf-bd1f63580cfd\",\n    \"type\": \"browser\",\n    \"expires_at\": \"2023-12-20T10:42:28.839397Z\",\n    \"issued_at\": \"2023-12-20T09:42:28.839397Z\",\n    \"request_url\": \"https://kratos.scrapnode.com/self-service/registration/browser\",\n    \"active\": \"code\",\n    \"ui\": {\n        \"action\": \"https://kratos.scrapnode.com/self-service/verification?flow=f1b62e42-e311-4222-95cf-bd1f63580cfd\",\n        \"method\": \"POST\",\n        \"nodes\": [\n            {\n                \"type\": \"input\",\n                \"group\": \"code\",\n                \"attributes\": {\n                    \"name\": \"method\",\n                    \"type\": \"hidden\",\n                    \"value\": \"code\",\n                    \"disabled\": false,\n                    \"node_type\": \"input\"\n                },\n                \"messages\": [],\n                \"meta\": {}\n            },\n            {\n                \"type\": \"input\",\n                \"group\": \"code\",\n                \"attributes\": {\n                    \"name\": \"code\",\n                    \"type\": \"text\",\n                    \"required\": true,\n                    \"disabled\": false,\n                    \"node_type\": \"input\"\n                },\n                \"messages\": [],\n                \"meta\": {\n                    \"label\": {\n                        \"id\": 1070011,\n                        \"text\": \"Verification code\",\n                        \"type\": \"info\"\n                    }\n                }\n            },\n            {\n                \"type\": \"input\",\n                \"group\": \"code\",\n                \"attributes\": {\n                    \"name\": \"method\",\n                    \"type\": \"submit\",\n                    \"value\": \"code\",\n                    \"disabled\": false,\n                    \"node_type\": \"input\"\n                },\n                \"messages\": [],\n                \"meta\": {\n                    \"label\": {\n                        \"id\": 1070005,\n                        \"text\": \"Submit\",\n                        \"type\": \"info\"\n                    }\n                }\n            },\n            {\n                \"type\": \"input\",\n                \"group\": \"default\",\n                \"attributes\": {\n                    \"name\": \"csrf_token\",\n                    \"type\": \"hidden\",\n                    \"value\": \"vbeh+FEMpPO5pIicduwM9ZY77Dvmt/0CodHzW+tCd+tnAfpw6e2RMm2jXEMjOYTrgdzOhh2vC4AJ9u2Q+s9ykQ==\",\n                    \"required\": true,\n                    \"disabled\": false,\n                    \"node_type\": \"input\"\n                },\n                \"messages\": [],\n                \"meta\": {}\n            }\n        ],\n        \"messages\": [\n            {\n                \"id\": 1080003,\n                \"text\": \"An email containing a verification code has been sent to the email address you provided. If you have not received an email, check the spelling of the address and make sure to use the address you registered with.\",\n                \"type\": \"info\"\n            }\n        ]\n    },\n    \"state\": \"sent_email\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Complete a Verification Flow",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "code",
+											"value": "489496",
+											"type": "text"
+										},
+										{
+											"key": "csrf_token",
+											"value": "vbeh+FEMpPO5pIicduwM9ZY77Dvmt/0CodHzW+tCd+tnAfpw6e2RMm2jXEMjOYTrgdzOhh2vC4AJ9u2Q+s9ykQ=="
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/self-service/verification?flow=f1b62e42-e311-4222-95cf-bd1f63580cfd",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"self-service",
+										"verification"
+									],
+									"query": [
+										{
+											"key": "flow",
+											"value": "f1b62e42-e311-4222-95cf-bd1f63580cfd",
+											"description": "(Required) The Registration Flow ID\n\nThe value for this parameter comes from `flow` URL Query parameter sent to your\napplication (e.g. `/registration?flow=abcde`)."
+										}
+									]
+								},
+								"description": "Use this endpoint to complete a registration flow by sending an identity's traits and password. This endpoint\nbehaves differently for API and browser flows.\n\nAPI flows expect `application/json` to be sent in the body and respond with\nHTTP 200 and a application/json body with the created identity success - if the session hook is configured the\n`session` and `session_token` will also be included;\nHTTP 410 if the original flow expired with the appropriate error messages set and optionally a `use_flow_id` parameter in the body;\nHTTP 400 on form validation errors.\n\nBrowser flows expect a Content-Type of `application/x-www-form-urlencoded` or `application/json` to be sent in the body and respond with\na HTTP 303 redirect to the post/after registration URL or the `return_to` value if it was set and if the registration succeeded;\na HTTP 303 redirect to the registration UI URL with the flow ID containing the validation errors otherwise.\n\nBrowser flows with an accept header of `application/json` will not redirect but instead respond with\nHTTP 200 and a application/json body with the signed in identity and a `Set-Cookie` header on success;\nHTTP 303 redirect to a fresh login flow if the original flow expired with the appropriate error messages set;\nHTTP 400 on form validation errors.\n\nIf this endpoint is called with `Accept: application/json` in the header, the response contains the flow without a redirect. In the\ncase of an error, the `error.id` of the JSON response body can be one of:\n\n`session_already_available`: The user is already signed in.\n`security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.\n`security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!\n`browser_location_change_required`: Usually sent when an AJAX request indicates that the browser needs to open a specific URL.\nMost likely used in Social Sign In flows.\n\nMore information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration)."
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/x-www-form-urlencoded"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "code",
+													"value": "489496",
+													"type": "text"
+												},
+												{
+													"key": "csrf_token",
+													"value": "vbeh+FEMpPO5pIicduwM9ZY77Dvmt/0CodHzW+tCd+tnAfpw6e2RMm2jXEMjOYTrgdzOhh2vC4AJ9u2Q+s9ykQ=="
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/self-service/verification?flow=f1b62e42-e311-4222-95cf-bd1f63580cfd",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"self-service",
+												"verification"
+											],
+											"query": [
+												{
+													"key": "flow",
+													"value": "f1b62e42-e311-4222-95cf-bd1f63580cfd",
+													"description": "(Required) The Registration Flow ID\n\nThe value for this parameter comes from `flow` URL Query parameter sent to your\napplication (e.g. `/registration?flow=abcde`)."
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Wed, 20 Dec 2023 09:46:06 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "vary",
+											"value": "Origin"
+										},
+										{
+											"key": "vary",
+											"value": "Cookie"
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=XqkTmfvQP3Sh93nIPZhcp7vpVnZfnUXOPMU0F%2BLuQMtnhAow%2Bl3Mm09A6rv9iFmSl2YRAZUw3vzRF31mrLPEHP9Ws7nrvvvMFSTwcfiARJFzpUODGexLYc9D6OagGGguug%2Fxb7JTZw%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "NEL",
+											"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "8386f4d18b9b8938-SIN"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "br"
+										},
+										{
+											"key": "alt-svc",
+											"value": "h3=\":443\"; ma=86400"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"f1b62e42-e311-4222-95cf-bd1f63580cfd\",\n    \"type\": \"browser\",\n    \"expires_at\": \"2023-12-20T10:42:28.839397Z\",\n    \"issued_at\": \"2023-12-20T09:42:28.839397Z\",\n    \"request_url\": \"https://kratos.scrapnode.com/self-service/registration/browser\",\n    \"active\": \"code\",\n    \"ui\": {\n        \"action\": \"https://auth.scrapnode.com/\",\n        \"method\": \"GET\",\n        \"nodes\": [\n            {\n                \"type\": \"input\",\n                \"group\": \"default\",\n                \"attributes\": {\n                    \"name\": \"csrf_token\",\n                    \"type\": \"hidden\",\n                    \"value\": \"XbFBP/PHARIDAaxTKsfj/bWU0O/0HRTVSPhZOH99fNKHBxq3SyY009cGeIx/EmvjonPyUg8F4lfg30fzbvB5qA==\",\n                    \"required\": true,\n                    \"disabled\": false,\n                    \"node_type\": \"input\"\n                },\n                \"messages\": [],\n                \"meta\": {}\n            },\n            {\n                \"type\": \"a\",\n                \"group\": \"code\",\n                \"attributes\": {\n                    \"href\": \"https://auth.scrapnode.com/\",\n                    \"title\": {\n                        \"id\": 1070009,\n                        \"text\": \"Continue\",\n                        \"type\": \"info\"\n                    },\n                    \"id\": \"continue\",\n                    \"node_type\": \"a\"\n                },\n                \"messages\": [],\n                \"meta\": {\n                    \"label\": {\n                        \"id\": 1070009,\n                        \"text\": \"Continue\",\n                        \"type\": \"info\"\n                    }\n                }\n            }\n        ],\n        \"messages\": [\n            {\n                \"id\": 1080002,\n                \"text\": \"You successfully verified your email address.\",\n                \"type\": \"success\"\n            }\n        ]\n    },\n    \"state\": \"passed_challenge\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "settings",
+					"item": [
+						{
+							"name": "browser",
+							"item": [
+								{
+									"name": "Initialize Settings Flow",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/self-service/settings/browser",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"self-service",
+												"settings",
+												"browser"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Submit a Setting Flow",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/x-www-form-urlencoded"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "method",
+											"value": "password",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "anotherpassword",
+											"description": "(Required) The user's password."
+										},
+										{
+											"key": "csrf_token",
+											"value": "f0p8kG05g2FaNgirbPc9GjXjX4Imm8xSn170giLCwzJ+Vig4mkOzU0zNFaJQmpGRLjulkzMz5W/dPNNP4Jvj0w==",
+											"description": "Sending the anti-csrf token is only required for browser login flows."
+										},
+										{
+											"key": "traits.username",
+											"value": "gyh55799@nezid.com",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "traits.email",
+											"value": "gyh55799@nezid.com",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "method",
+											"value": "profile",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/self-service/settings?flow=1e7871b0-9212-4401-a764-ef32caccd5e9",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"self-service",
+										"settings"
+									],
+									"query": [
+										{
+											"key": "flow",
+											"value": "1e7871b0-9212-4401-a764-ef32caccd5e9",
+											"description": "(Required) The Login Flow ID\n\nThe value for this parameter comes from `flow` URL Query parameter sent to your\napplication (e.g. `/login?flow=abcde`)."
+										}
+									]
+								},
+								"description": ":::info\n\nThis endpoint is EXPERIMENTAL and subject to potential breaking changes in the future.\n\n:::\n\nUse this endpoint to complete a login flow. This endpoint\nbehaves differently for API and browser flows.\n\nAPI flows expect `application/json` to be sent in the body and responds with\nHTTP 200 and a application/json body with the session token on success;\nHTTP 410 if the original flow expired with the appropriate error messages set and optionally a `use_flow_id` parameter in the body;\nHTTP 400 on form validation errors.\n\nBrowser flows expect a Content-Type of `application/x-www-form-urlencoded` or `application/json` to be sent in the body and respond with\na HTTP 303 redirect to the post/after login URL or the `return_to` value if it was set and if the login succeeded;\na HTTP 303 redirect to the login UI URL with the flow ID containing the validation errors otherwise.\n\nBrowser flows with an accept header of `application/json` will not redirect but instead respond with\nHTTP 200 and a application/json body with the signed in identity and a `Set-Cookie` header on success;\nHTTP 303 redirect to a fresh login flow if the original flow expired with the appropriate error messages set;\nHTTP 400 on form validation errors.\n\nIf this endpoint is called with `Accept: application/json` in the header, the response contains the flow without a redirect. In the\ncase of an error, the `error.id` of the JSON response body can be one of:\n\n`session_already_available`: The user is already signed in.\n`security_csrf_violation`: Unable to fetch the flow because a CSRF violation occurred.\n`security_identity_mismatch`: The requested `?return_to` address is not allowed to be used. Adjust this in the configuration!\n`browser_location_change_required`: Usually sent when an AJAX request indicates that the browser needs to open a specific URL.\nMost likely used in Social Sign In flows.\n\nMore information can be found at [Ory Kratos User Login](https://www.ory.sh/docs/kratos/self-service/flows/user-login) and [User Registration Documentation](https://www.ory.sh/docs/kratos/self-service/flows/user-registration)."
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/x-www-form-urlencoded"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "method",
+													"value": "password",
+													"description": "(Required) Method should be set to \"password\" when logging in using the identifier and password strategy."
+												},
+												{
+													"key": "password",
+													"value": "1password",
+													"description": "(Required) The user's password."
+												},
+												{
+													"key": "identifier",
+													"value": "gyh55799@nezid.com",
+													"description": "(Required) Identifier is the email or username of the user trying to log in."
+												},
+												{
+													"key": "csrf_token",
+													"value": "I2PGDhh/vNT/9W0wunEMViu8dYDvgSJvlCqWvQHxAafRwkxG9G0rVCVyCsnViwjd9PmtpR8jbJAK4IUyoLFQiQ==",
+													"description": "Sending the anti-csrf token is only required for browser login flows."
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/self-service/login?flow=04d459df-5c63-44eb-830a-665eeeaed215",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"self-service",
+												"login"
+											],
+											"query": [
+												{
+													"key": "flow",
+													"value": "04d459df-5c63-44eb-830a-665eeeaed215",
+													"description": "(Required) The Login Flow ID\n\nThe value for this parameter comes from `flow` URL Query parameter sent to your\napplication (e.g. `/login?flow=abcde`)."
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Wed, 20 Dec 2023 13:13:35 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "set-cookie",
+											"value": "csrf_token_6c0cb2d8e17be2aeca168648961b34f465bed2ffa37dd7fa2ad8b4867a3b1f15=5GkVMgKWRLEDRqvQuNv+FwRCk89UozeJ2OG454/ZSIE=; Path=/; Domain=scrapnode.com; Max-Age=31536000; HttpOnly; Secure; SameSite=Lax"
+										},
+										{
+											"key": "set-cookie",
+											"value": "ory_kratos_session=MTcwMzA3ODAxNXx2QU1sR1ZzNWJhX1gtXzJZa1Vtck9NbVVxWklVOWJZRS14SXpBVWVWY3lsRFJFZzRzV0pUaW9RY3VoVndjSW14c0gyOGxHRjNFd29kS3Q2S2RaTGZxQmltYjhWbFdKVXJBaFpZRkZacTc0cHJOWlBjVFR1ellxV2JZWWtjQXhrVEZZODUxeExFTGM3VjNuSV9LUHZUSFVzc0d2cHZrclZYWGxEN1lmQUR0QWRhT3ItOVhXc1piYThmX1J0enhnSThNYWRXT2dIUmcwS3VHcW40THplTTZmV2dSaUtTc29nREg3QzF2dE8yWFNwSWU1dW1KVnlCbnBnc1FFUGt2eXVkNjRJY2lKNEQtRXBLSzJpSkRLV0l8qVcR1CNST0wrxpVBsAjSqxXy9kN0qgPq0J5YlylwhdY=; Path=/; Domain=scrapnode.com; Expires=Thu, 21 Dec 2023 13:13:34 GMT; Max-Age=86399; HttpOnly; Secure; SameSite=Lax"
+										},
+										{
+											"key": "vary",
+											"value": "Origin"
+										},
+										{
+											"key": "vary",
+											"value": "Cookie"
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=LNKrb0dx1mW0z59jD%2BR5vjNOtoR%2B%2F4KeyNcI0G%2Fjd39G3bIf8alr%2Ff3oPBfs5RUCTvGEOLizQkHshzVswJfrX7I26XjxvF3Kyg8OS9gK%2B2SiepeY1KgfPzfvEKkApN78OSdfnzs9%2BQ%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "NEL",
+											"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "838824ba79a19e40-SIN"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "br"
+										},
+										{
+											"key": "alt-svc",
+											"value": "h3=\":443\"; ma=86400"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"session\": {\n        \"id\": \"468ca40c-ae5b-4037-8914-f65597626c3d\",\n        \"active\": true,\n        \"expires_at\": \"2023-12-21T13:13:35.413927139Z\",\n        \"authenticated_at\": \"2023-12-20T13:13:35.413927139Z\",\n        \"authenticator_assurance_level\": \"aal1\",\n        \"authentication_methods\": [\n            {\n                \"method\": \"password\",\n                \"aal\": \"aal1\",\n                \"completed_at\": \"2023-12-20T13:13:35.413921865Z\"\n            }\n        ],\n        \"issued_at\": \"2023-12-20T13:13:35.413927139Z\",\n        \"identity\": {\n            \"id\": \"d95ad291-d27b-4eaa-89bb-4c151c757ae6\",\n            \"schema_id\": \"default\",\n            \"schema_url\": \"https://kratos.scrapnode.com/schemas/ZGVmYXVsdA\",\n            \"state\": \"active\",\n            \"state_changed_at\": \"2023-12-20T09:42:28.832395Z\",\n            \"traits\": {\n                \"email\": \"gyh55799@nezid.com\"\n            },\n            \"verifiable_addresses\": [\n                {\n                    \"id\": \"d25a17e9-c624-46be-a0c1-5002b3495c8a\",\n                    \"value\": \"gyh55799@nezid.com\",\n                    \"verified\": true,\n                    \"via\": \"email\",\n                    \"status\": \"completed\",\n                    \"verified_at\": \"2023-12-20T09:46:06.984885Z\",\n                    \"created_at\": \"2023-12-20T09:42:28.834034Z\",\n                    \"updated_at\": \"2023-12-20T09:42:28.834034Z\"\n                }\n            ],\n            \"recovery_addresses\": [\n                {\n                    \"id\": \"f45a9abe-9ef3-4761-8936-128e7e3616dc\",\n                    \"value\": \"gyh55799@nezid.com\",\n                    \"via\": \"email\",\n                    \"created_at\": \"2023-12-20T09:42:28.834411Z\",\n                    \"updated_at\": \"2023-12-20T09:42:28.834411Z\"\n                }\n            ],\n            \"metadata_public\": null,\n            \"created_at\": \"2023-12-20T09:42:28.833549Z\",\n            \"updated_at\": \"2023-12-20T09:42:28.833549Z\",\n            \"organization_id\": null\n        },\n        \"devices\": [\n            {\n                \"id\": \"0ea9cb85-b617-4dc3-b244-920e3df23522\",\n                \"ip_address\": \"10.42.0.1\",\n                \"user_agent\": \"PostmanRuntime/7.36.0\",\n                \"location\": \"VN\"\n            }\n        ]\n    }\n}"
+								},
+								{
+									"name": "Success with code",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/x-www-form-urlencoded"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "method",
+													"value": "code",
+													"description": "(Required) Method should be set to \"password\" when logging in using the identifier and password strategy."
+												},
+												{
+													"key": "code",
+													"value": "018510",
+													"description": "(Required) The user's password."
+												},
+												{
+													"key": "identifier",
+													"value": "jannymita9493@gmail.com",
+													"description": "(Required) Identifier is the email or username of the user trying to log in."
+												},
+												{
+													"key": "csrf_token",
+													"value": "sbh5XZ9mZVL5XFfc6+G2cioNnoihwSv42nXFOH+XtTVV0WxvnfAh4/oa/AxTOkhlLk8NR/ViHHEClH3f8E79tA==",
+													"description": "Sending the anti-csrf token is only required for browser login flows."
+												}
+											]
+										},
+										"url": {
+											"raw": "{{baseUrl}}/self-service/login?flow=7c2e0842-aeb2-4804-ba45-4f7344245c40",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"self-service",
+												"login"
+											],
+											"query": [
+												{
+													"key": "flow",
+													"value": "7c2e0842-aeb2-4804-ba45-4f7344245c40",
+													"description": "(Required) The Login Flow ID\n\nThe value for this parameter comes from `flow` URL Query parameter sent to your\napplication (e.g. `/login?flow=abcde`)."
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Tue, 26 Dec 2023 09:20:03 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "set-cookie",
+											"value": "csrf_token_6c0cb2d8e17be2aeca168648961b34f465bed2ffa37dd7fa2ad8b4867a3b1f15=4DhZBRlTTELvp5xnFy6y+k3GPEJnUuUJ0qR639izwAo=; Path=/; Domain=scrapnode.com; Max-Age=31536000; HttpOnly; Secure; SameSite=Lax"
+										},
+										{
+											"key": "set-cookie",
+											"value": "ory_kratos_session=MTcwMzU4MjQwM3xkV01FV2EybndHU2NIOTZfZXVmZHRYeFVoZU1kWjVTbklJOWxTbWtLQkNYdXE5NEhNekVVVWE0NTBvRHZiQlY5ZkRfTXVFTnFETmtQVlhjMjlFRkQ4a0R6ZUw3WjlMOVZuWUxIOGVGWlkydXRzeV8xRnNSUWI2MW90TjhGT1hDN3J2TU5EWXpncEtMSGZZaThXM04xdFBiZndiX25YUUNoalF3d2FTX1kzR0pIbE1pNkE0NnNVekJyaGpGR19VT3RMbmItR0o1eDh2MTBHM3R0T0dCV0twQzc4bGVSUkVkZ1lYX2tHcE03NV8xYmVqekQ3TnU0T2t4TTdHcUpscVRMeklCbG5GaVdnWE1BdHo3WG5rUWh8iZZwHzWpj5zCxBQvN4k3eD0ChXMbKcycHB6Fo5uFAEw=; Path=/; Domain=scrapnode.com; Expires=Wed, 27 Dec 2023 09:20:02 GMT; Max-Age=86399; HttpOnly; Secure; SameSite=Lax"
+										},
+										{
+											"key": "vary",
+											"value": "Origin"
+										},
+										{
+											"key": "vary",
+											"value": "Cookie"
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=S%2BfiFbZx7XHDwt9ufMXWr2xnF%2B7MCt%2BBhsM%2Bn9wkkNof9fhhpRI6UU%2FJ8AE5EZEHQ6uJpeC%2BL89YvkK%2FRJhSEZjgLYmoUbYmfkNURbAv0aJLKZENbatt58Rm5R0bfoEARUL79dBYIw%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "NEL",
+											"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "83b83ee8bd634c59-SIN"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "br"
+										},
+										{
+											"key": "alt-svc",
+											"value": "h3=\":443\"; ma=86400"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"session\": {\n        \"id\": \"e439e4d4-65fa-4310-bd3c-b9907ca8ed8a\",\n        \"active\": true,\n        \"expires_at\": \"2023-12-27T09:20:03.978709838Z\",\n        \"authenticated_at\": \"2023-12-26T09:20:03.978709838Z\",\n        \"authenticator_assurance_level\": \"aal1\",\n        \"authentication_methods\": [\n            {\n                \"method\": \"code\",\n                \"aal\": \"aal1\",\n                \"completed_at\": \"2023-12-26T09:20:03.978706262Z\"\n            }\n        ],\n        \"issued_at\": \"2023-12-26T09:20:03.978709838Z\",\n        \"identity\": {\n            \"id\": \"a7b19cd8-3dcf-484a-9333-a4a3220732bc\",\n            \"schema_id\": \"default\",\n            \"schema_url\": \"https://kratos.scrapnode.com/schemas/ZGVmYXVsdA\",\n            \"state\": \"active\",\n            \"state_changed_at\": \"2023-12-20T14:45:46.371496Z\",\n            \"traits\": {\n                \"email\": \"jannymita9493@gmail.com\"\n            },\n            \"verifiable_addresses\": [\n                {\n                    \"id\": \"e5ed20d3-da08-4aa6-838e-7482d76683aa\",\n                    \"value\": \"jannymita9493@gmail.com\",\n                    \"verified\": true,\n                    \"via\": \"email\",\n                    \"status\": \"completed\",\n                    \"verified_at\": \"2023-12-20T14:46:00.332195Z\",\n                    \"created_at\": \"2023-12-20T14:45:46.373344Z\",\n                    \"updated_at\": \"2023-12-20T14:45:46.373344Z\"\n                }\n            ],\n            \"recovery_addresses\": [\n                {\n                    \"id\": \"f431a37e-8c11-4d9b-a040-0cbfe5f8c6c7\",\n                    \"value\": \"jannymita9493@gmail.com\",\n                    \"via\": \"email\",\n                    \"created_at\": \"2023-12-20T14:45:46.374095Z\",\n                    \"updated_at\": \"2023-12-20T14:45:46.374095Z\"\n                }\n            ],\n            \"metadata_public\": null,\n            \"created_at\": \"2023-12-20T14:45:46.372497Z\",\n            \"updated_at\": \"2023-12-20T14:45:46.372497Z\",\n            \"organization_id\": null\n        },\n        \"devices\": [\n            {\n                \"id\": \"edb763f5-2f70-4da3-b8f9-8d1648aa87e5\",\n                \"ip_address\": \"10.42.0.1\",\n                \"user_agent\": \"PostmanRuntime/7.36.0\",\n                \"location\": \"VN\"\n            }\n        ]\n    }\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "sessions",
+			"item": [
+				{
+					"name": "whoami",
+					"item": [
+						{
+							"name": "Check Who the Current HTTP Session Belongs To",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/sessions/whoami",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"sessions",
+										"whoami"
+									]
+								},
+								"description": "Uses the HTTP Headers in the GET request to determine (e.g. by using checking the cookies) who is authenticated.\nReturns a session object in the body or 401 if the credentials are invalid or no credentials were sent.\nWhen the request it successful it adds the user ID to the 'X-Kratos-Authenticated-Identity-Id' header\nin the response.\n\nIf you call this endpoint from a server-side application, you must forward the HTTP Cookie Header to this endpoint:\n\n```js\npseudo-code example\nrouter.get('/protected-endpoint', async function (req, res) {\nconst session = await client.toSession(undefined, req.header('cookie'))\n\nconsole.log(session)\n})\n```\n\nWhen calling this endpoint from a non-browser application (e.g. mobile app) you must include the session token:\n\n```js\npseudo-code example\n...\nconst session = await client.toSession(\"the-session-token\")\n\nconsole.log(session)\n```\n\nDepending on your configuration this endpoint might return a 403 status code if the session has a lower Authenticator\nAssurance Level (AAL) than is possible for the identity. This can happen if the identity has password + webauthn\ncredentials (which would result in AAL2) but the session has only AAL1. If this error occurs, ask the user\nto sign in with the second factor or change the configuration.\n\nThis endpoint is useful for:\n\nAJAX calls. Remember to send credentials and set up CORS correctly!\nReverse proxies and API Gateways\nServer-side calls - use the `X-Session-Token` header!\n\nThis endpoint authenticates users by checking:\n\nif the `Cookie` HTTP header was set containing an Ory Kratos Session Cookie;\nif the `Authorization: bearer <ory-session-token>` HTTP header was set with a valid Ory Kratos Session Token;\nif the `X-Session-Token` HTTP header was set with a valid Ory Kratos Session Token.\n\nIf none of these headers are set or the cookie or token are invalid, the endpoint returns a HTTP 401 status code.\n\nAs explained above, this request may fail due to several reasons. The `error.id` can be one of:\n\n`session_inactive`: No active session was found in the request (e.g. no Ory Session Cookie / Ory Session Token).\n`session_aal2_required`: An active session was found but it does not fulfil the Authenticator Assurance Level, implying that the session must (e.g.) authenticate the second factor."
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/sessions/whoami",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"sessions",
+												"whoami"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Date",
+											"value": "Wed, 20 Dec 2023 13:23:16 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "private, no-cache, no-store, must-revalidate"
+										},
+										{
+											"key": "vary",
+											"value": "Origin"
+										},
+										{
+											"key": "vary",
+											"value": "Cookie"
+										},
+										{
+											"key": "x-kratos-authenticated-identity-id",
+											"value": "d95ad291-d27b-4eaa-89bb-4c151c757ae6"
+										},
+										{
+											"key": "CF-Cache-Status",
+											"value": "DYNAMIC"
+										},
+										{
+											"key": "Report-To",
+											"value": "{\"endpoints\":[{\"url\":\"https:\\/\\/a.nel.cloudflare.com\\/report\\/v3?s=7S264sJBVEvVO9FC7HToJGeFS0peQl2bY97nxggStSWixOoyVaNkTUKxxtC5gJAs2uIMWKv92523Eug2q2dw5OGvnJIGGV4f8GUVB9ytvHiNMAmzjQx3S5VurRVn%2Bj71fd6AlLkYrA%3D%3D\"}],\"group\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "NEL",
+											"value": "{\"success_fraction\":0,\"report_to\":\"cf-nel\",\"max_age\":604800}"
+										},
+										{
+											"key": "Server",
+											"value": "cloudflare"
+										},
+										{
+											"key": "CF-RAY",
+											"value": "838832ed9c9e9e40-SIN"
+										},
+										{
+											"key": "Content-Encoding",
+											"value": "br"
+										},
+										{
+											"key": "alt-svc",
+											"value": "h3=\":443\"; ma=86400"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"id\": \"468ca40c-ae5b-4037-8914-f65597626c3d\",\n    \"active\": true,\n    \"expires_at\": \"2023-12-21T13:13:35.413927Z\",\n    \"authenticated_at\": \"2023-12-20T13:13:35.413927Z\",\n    \"authenticator_assurance_level\": \"aal1\",\n    \"authentication_methods\": [\n        {\n            \"method\": \"password\",\n            \"aal\": \"aal1\",\n            \"completed_at\": \"2023-12-20T13:13:35.413921865Z\"\n        }\n    ],\n    \"issued_at\": \"2023-12-20T13:13:35.413927Z\",\n    \"identity\": {\n        \"id\": \"d95ad291-d27b-4eaa-89bb-4c151c757ae6\",\n        \"schema_id\": \"default\",\n        \"schema_url\": \"https://kratos.scrapnode.com/schemas/ZGVmYXVsdA\",\n        \"state\": \"active\",\n        \"state_changed_at\": \"2023-12-20T09:42:28.832395Z\",\n        \"traits\": {\n            \"email\": \"gyh55799@nezid.com\"\n        },\n        \"verifiable_addresses\": [\n            {\n                \"id\": \"d25a17e9-c624-46be-a0c1-5002b3495c8a\",\n                \"value\": \"gyh55799@nezid.com\",\n                \"verified\": true,\n                \"via\": \"email\",\n                \"status\": \"completed\",\n                \"verified_at\": \"2023-12-20T09:46:06.984885Z\",\n                \"created_at\": \"2023-12-20T09:42:28.834034Z\",\n                \"updated_at\": \"2023-12-20T09:42:28.834034Z\"\n            }\n        ],\n        \"recovery_addresses\": [\n            {\n                \"id\": \"f45a9abe-9ef3-4761-8936-128e7e3616dc\",\n                \"value\": \"gyh55799@nezid.com\",\n                \"via\": \"email\",\n                \"created_at\": \"2023-12-20T09:42:28.834411Z\",\n                \"updated_at\": \"2023-12-20T09:42:28.834411Z\"\n            }\n        ],\n        \"metadata_public\": null,\n        \"created_at\": \"2023-12-20T09:42:28.833549Z\",\n        \"updated_at\": \"2023-12-20T09:42:28.833549Z\",\n        \"organization_id\": null\n    },\n    \"devices\": [\n        {\n            \"id\": \"0ea9cb85-b617-4dc3-b244-920e3df23522\",\n            \"ip_address\": \"10.42.0.1\",\n            \"user_agent\": \"PostmanRuntime/7.36.0\",\n            \"location\": \"VN\"\n        }\n    ]\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/"
+		}
+	]
+}
